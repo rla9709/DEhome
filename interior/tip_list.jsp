@@ -1,3 +1,6 @@
+<%@page import="interior.InteriorDTO"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="interior.InteriorDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -15,6 +18,14 @@
     <link rel="stylesheet" href="../css/reset.css" />
 
     <link rel="stylesheet" href="../css/interior_tip.css" />
+    
+<%
+	//utf8 인코딩
+	request.setCharacterEncoding("utf-8");
+
+	InteriorDAO dao = InteriorDAO.getInstance();
+	String category = request.getParameter("category");
+%>
 </head>
 <body>
 <%@include file="../headerfooter/header.jsp" %>  
@@ -34,182 +45,121 @@
           	   onclick="location.href='tip_write.jsp'" />
 <%
 		}
-%>
 
-<%-- =============== 6월 8일 여기까지 작업함 =============== --%>
-        <p>
-        	<span class="font_green">시공TIP</span>
-        	인테리어 시공 꿀팁
-        </p>
-      </div>
-      <div id="tip_sub_title">
-        <span>
-        	혼자서도 척척, 시공까지 셀프로하고 싶은 여러분을 위한 
-         	다양한 사람들의 시공 꿀팁
-        </span>
-      </div>
+		if(category != null) { // 인테리어 팁 카테고리별 화면
+			if(category.equals("construction")) {
+%>
+					<p>
+	        			<span class="font_green">시공 TIP</span>
+	        			인테리어 시공 꿀팁
+	        		</p>
+<% 
+			} else if(category.equals("storage")) {
+%>
+					<p>
+	        			<span class="font_green">수납 TIP</span>
+	        			수납 인테리어 꿀팁
+	        		</p>
+<% 
+			} else if(category.equals("decorate")) {
+%>
+					<p>
+	        			<span class="font_green">꾸미기 TIP</span>
+	        			꾸미기 꿀팁
+	        		</p>
+<% 
+			} else if(category.equals("cleaning")) {
+%>
+				<p>
+        			<span class="font_green">청소 TIP</span>
+        			청소 꿀팁
+        		</p>
+<% 
+			} else if(category.equals("diy")) {
+%>
+				<p>
+        			<span class="font_green">DIY TIP</span>
+        			DIY 인테리어 꿀팁
+        		</p>
+<% 
+			} else if(category.equals("reform")) {
+%>
+				<p>
+        			<span class="font_green">리폼 TIP</span>
+        			인테리어 리폼 꿀팁
+        		</p>
+<% 
+			} else if(category.equals("kitchen_bath")) {
+%>
+				<p>
+        			<span class="font_green">주방/욕실 TIP</span>
+        			주방/욕실 인테리어 꿀팁
+        		</p>
+<% 
+			} else if(category.equals("electric_light")) {
+%>
+				<p>
+        			<span class="font_green">전기/조명 TIP</span>
+        			전기/조명 인테리어 꿀팁
+        		</p>
+<%
+			}
+		}
+%>
+				</div>
+	      		<div id="tip_sub_title">
+	        		<span>
+	        			다양한 사람들과 공유하는, 누구나 할 수 있지만
+	        			알려주기 전엔 모르는 오직 나 만의 꿀팁
+			        </span>
+	      		</div>
       <%-- 콘텐트 --%>
       <table>
         <tr>
+<%
+		ArrayList<InteriorDTO> list = dao.interiorTipCategoryList(category);
+		int sum = 0;
+		for(int i = 0; i < list.size(); i++) {
+			InteriorDTO dto = list.get(i);
+			String title = dto.getTip_title();// 글제목
+			String photo = dto.getTip_file();
+			int count = dto.getTip_count();// 조회수
+			int bookmark = dto.getTip_bookmark();
+			sum++;
+%>
           <td>
             <a href="tip_page.html">
               <div id="shop">
                 <div class="shop_img">
                   <input type="button" />
-                  <img src="../images/paint.jpg" />
+                  <img src="<%= photo%>" />
                 </div>
                 <div class="shop_ex">
-                  <div class="shop_name">방문 페인트칠로 리폼하기</div>
+                  <div class="shop_name"><%= title%></div>
                   <p>
-                    조회수 <span class="font_green">280,755</span> · 스크랩
-                    <span class="font_green">4,621</span>
+                                     조회수 
+                    <span class="font_green"><%= count%></span> 
+                    · 스크랩 
+                    <span class="font_green"><%= bookmark%></span>
                   </p>
                 </div>
               </div>
             </a>
           </td>
-          <td>
-            <a href="tip_page.html">
-              <div id="shop">
-                <div class="shop_img">
-                  <input type="button" />
-                  <img src="images/tile.jpg" />
-                </div>
-                <div class="shop_ex">
-                  <div class="shop_name">타일깔기도 이젠 셀프로 척척</div>
-                  <p>
-                    조회수 <span class="font_green">280,755</span> · 스크랩
-                    <span class="font_green">4,621</span>
-                  </p>
-                </div>
-              </div>
-            </a>
-          </td>
-          <td>
-            <a href="tip_page.html">
-              <div id="shop">
-                <div class="shop_img">
-                  <input type="button" />
-                  <img src="images/wall.jpg" />
-                </div>
-                <div class="shop_ex">
-                  <div class="shop_name">내가 원하는 스타일로 벽지 꾸미기</div>
-                  <p>
-                    조회수 <span class="font_green">280,755</span> · 스크랩
-                    <span class="font_green">4,621</span>
-                  </p>
-                </div>
-              </div>
-            </a>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <a href="tip_page.html">
-              <div id="shop">
-                <div class="shop_img">
-                  <input type="button" />
-                  <img src="images/room_09.jpg" />
-                </div>
-                <div class="shop_ex">
-                  <div class="shop_name">방문 페인트칠로 리폼하기</div>
-                  <p>
-                    조회수 <span class="font_green">280,755</span> · 스크랩
-                    <span class="font_green">4,621</span>
-                  </p>
-                </div>
-              </div>
-            </a>
-          </td>
-          <td>
-            <a href="tip_page.html">
-              <div id="shop">
-                <div class="shop_img">
-                  <input type="button" />
-                  <img src="images/room_08.jpg" />
-                </div>
-                <div class="shop_ex">
-                  <div class="shop_name">타일깔기도 이젠 셀프로 척척</div>
-                  <p>
-                    조회수 <span class="font_green">280,755</span> · 스크랩
-                    <span class="font_green">4,621</span>
-                  </p>
-                </div>
-              </div>
-            </a>
-          </td>
-          <td>
-            <a href="tip_page.html">
-              <div id="shop">
-                <div class="shop_img">
-                  <input type="button" />
-                  <img src="images/room_07.jpg" />
-                </div>
-                <div class="shop_ex">
-                  <div class="shop_name">내가 원하는 스타일로 벽지 꾸미기</div>
-                  <p>
-                    조회수 <span class="font_green">280,755</span> · 스크랩
-                    <span class="font_green">4,621</span>
-                  </p>
-                </div>
-              </div>
-            </a>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <a href="tip_page.html">
-              <div id="shop">
-                <div class="shop_img">
-                  <input type="button" />
-                  <img src="images/paint.jpg" />
-                </div>
-                <div class="shop_ex">
-                  <div class="shop_name">방문 페인트칠로 리폼하기</div>
-                  <p>
-                    조회수 <span class="font_green">280,755</span> · 스크랩
-                    <span class="font_green">4,621</span>
-                  </p>
-                </div>
-              </div>
-            </a>
-          </td>
-          <td>
-            <a href="tip_page.html">
-              <div id="shop">
-                <div class="shop_img">
-                  <input type="button" />
-                  <img src="images/tile.jpg" />
-                </div>
-                <div class="shop_ex">
-                  <div class="shop_name">타일깔기도 이젠 셀프로 척척</div>
-                  <p>
-                    조회수 <span class="font_green">280,755</span> · 스크랩
-                    <span class="font_green">4,621</span>
-                  </p>
-                </div>
-              </div>
-            </a>
-          </td>
-          <td>
-            <a href="tip_page.html">
-              <div id="shop">
-                <div class="shop_img">
-                  <input type="button" />
-                  <img src="images/wall.jpg" />
-                </div>
-                <div class="shop_ex">
-                  <div class="shop_name">내가 원하는 스타일로 벽지 꾸미기</div>
-                  <p>
-                    조회수 <span class="font_green">280,755</span> · 스크랩
-                    <span class="font_green">4,621</span>
-                  </p>
-                </div>
-              </div>
-            </a>
-          </td>
+         
+<%		
+			// 3번 반복시마다 개행
+			if(sum != 0 && sum % 3 == 0){
+%>
+				</tr>
+				<tr>
+<%
+			}
+		}
+%>
         </tr>
       </table>
+      <%-- 미구현 --%>
       <div id="move_btn">
         <input type="button" value="더보기" />
       </div>

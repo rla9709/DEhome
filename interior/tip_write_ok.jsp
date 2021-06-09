@@ -10,7 +10,7 @@
 	InteriorDAO manager = InteriorDAO.getInstance();
 	
 	// 팁 작성후 어디로 보낼지 선택하기 위한 변수
-	String cat = dto.getTip_cat();
+	String cat = dto.getTip_category();
 	String nick = (String)session.getAttribute("nick");
 	
 	int re = manager.insertTip(dto, nick);

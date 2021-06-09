@@ -10,6 +10,10 @@
 
 <!-- 실제로 파일 업로드 하기 위한 클래스 -->
 <%@ page import="com.oreilly.servlet.MultipartRequest" %>
+<% 
+	//utf8 인코딩
+	request.setCharacterEncoding("utf-8");
+%>
 <!DOCTYPE html>
 <html>
 <head>
