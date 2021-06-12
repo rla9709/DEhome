@@ -47,7 +47,7 @@
 		}
 
 		if(category != null) { // 인테리어 팁 카테고리별 화면
-			if(category.equals("construction")) {
+			if(category.equals("construct")) {
 %>
 					<p>
 	        			<span class="font_green">시공 TIP</span>
@@ -89,14 +89,14 @@
         			인테리어 리폼 꿀팁
         		</p>
 <% 
-			} else if(category.equals("kitchen_bath")) {
+			} else if(category.equals("kitchen")) {
 %>
 				<p>
         			<span class="font_green">주방/욕실 TIP</span>
         			주방/욕실 인테리어 꿀팁
         		</p>
 <% 
-			} else if(category.equals("electric_light")) {
+			} else if(category.equals("lighting")) {
 %>
 				<p>
         			<span class="font_green">전기/조명 TIP</span>
@@ -119,16 +119,19 @@
 <%
 		ArrayList<InteriorDTO> list = dao.interiorTipCategoryList(category);
 		int sum = 0;
+		
 		for(int i = 0; i < list.size(); i++) {
 			InteriorDTO dto = list.get(i);
+			int tip_no = dto.getTip_no();
 			String title = dto.getTip_title();// 글제목
-			String photo = dto.getTip_file();
+			String photo = dto.getTip_file(); 
 			int count = dto.getTip_count();// 조회수
 			int bookmark = dto.getTip_bookmark();
 			sum++;
+			
 %>
           <td>
-            <a href="tip_page.html">
+            <a href="tip_page.jsp?tip_no=<%= tip_no %>&category=<%= category %>">
               <div id="shop">
                 <div class="shop_img">
                   <input type="button" />

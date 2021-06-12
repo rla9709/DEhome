@@ -1,40 +1,41 @@
 <%@page import="interior.InteriorDAO"%>
 <%@page import="interior.InteriorDTO"%>
 <%@page import="java.sql.Timestamp"%>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <jsp:useBean id="dto" class="interior.InteriorDTO"/>
 <jsp:setProperty property="*" name="dto"/>
 <%
+	request.setCharacterEncoding("UTF-8");
 	dto.setTip_date(new Timestamp(System.currentTimeMillis()));
 	InteriorDAO manager = InteriorDAO.getInstance();
 	
-	// ÆÁ ÀÛ¼ºÈÄ ¾îµð·Î º¸³¾Áö ¼±ÅÃÇÏ±â À§ÇÑ º¯¼ö
-	String cat = dto.getTip_category();
+	// íŒ ìž‘ì„±í›„ ì–´ë””ë¡œ ë³´ë‚¼ì§€ ì„ íƒí•˜ê¸° ìœ„í•œ ë³€ìˆ˜
+	String cat = request.getParameter("tip_category");
 	String nick = (String)session.getAttribute("nick");
-	
 	int re = manager.insertTip(dto, nick);
+	
 	if(re == 1) {
 %>
 	<script>
-		alert("±ÛÀ» µî·Ï ÇÏ¼Ì½À´Ï´Ù.");
+		alert("ê¸€ì„ ë“±ë¡ í•˜ì…¨ìŠµë‹ˆë‹¤.");
 		<%
 			if(cat.equals("construct")) {
-				response.sendRedirect("tip_construct.jsp");
+				response.sendRedirect("../interior/tip_list.jsp?category=construct");
 			} else if(cat.equals("decorate")) {
-				response.sendRedirect("tip_decorate.jsp");
-			} else if(cat.equals("DIY")) {
-				response.sendRedirect("tip_diy.jsp");
+				response.sendRedirect("../interior/tip_list.jsp?category=decorate");
+			} else if(cat.equals("diy")) {
+				response.sendRedirect("../interior/tip_list.jsp?category=diy");
 			} else if(cat.equals("kitchen")) {
-				response.sendRedirect("tip_kitchen.jsp");
+				response.sendRedirect("../interior/tip_list.jsp?category=kitchen");
 			} else if(cat.equals("storage")) {
-				response.sendRedirect("tip_storage.jsp");
+				response.sendRedirect("../interior/tip_list.jsp?category=storage");
 			} else if(cat.equals("cleaning")) {
-				response.sendRedirect("tip_cleaning.jsp");
+				response.sendRedirect("../interior/tip_list.jsp?category=cleaning");
 			} else if(cat.equals("reform")) {
-				response.sendRedirect("tip_reform.jsp");
+				response.sendRedirect("../interior/tip_list.jsp?category=reform");
 			} else if(cat.equals("lighting")) {
-				response.sendRedirect("tip_lighting.jsp");
+				response.sendRedirect("../interior/tip_list.jsp?category=lighting");
 			} 
 		%>
 	</script>
@@ -42,7 +43,7 @@
 	}else {
 %>
 	<script>
-		alert("±Û µî·Ï¿¡ ½ÇÆÐÇß½À´Ï´Ù.");
+		alert("ê¸€ ë“±ë¡ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.");
 	</script>
 <%
 		response.sendRedirect("tip_write.jsp");		

@@ -27,8 +27,8 @@
     <link rel="shortcut icon" type="image⁄x-icon" href="../images/x-icon.png" />
     <link rel="stylesheet" href="../css/header_footer.css" />
     <link rel="stylesheet" href="../css/reset.css" />
-
     <link rel="stylesheet" href="../css/interior_write.css" />
+    
     <script type="text/javascript" src="../js/tip.js" charset="utf-8"></script>
 </head>
 <body>
@@ -37,13 +37,13 @@
       <p>인테리어 팁 작성</p>
       <p>나만의 인테리어 팁을 모두에게 공유해보세요</p>
     </div>
-    <form name="tip_write_frm" action="tip_write_ok.jsp" method="post" enctype="multipart/form-data">
+    <form name="tip_write_frm" action="tip_write_ok.jsp" method="get" enctype="multipart/form-data">
 	    <div id="write_content">
 	      <div class="write_select">
-	        <select name="tip_cat">
+	        <select name="tip_category">
 	          <option value="construct">시공</option>
 	          <option value="decorate">꾸미기 팁</option>
-	          <option value="DIY">DIY</option>
+	          <option value="diy">DIY</option>
 	          <option value="kitchen">주방/욕실</option>
 	          <option value="storage">수납</option>
 	          <option value="cleaning">청소</option>
