@@ -1,0 +1,109 @@
+/* 마이페이지관련 메인,공통적용 */
+.page_title {
+    margin-top: 40px;
+    margin-bottom: 20px;
+    text-align: center;
+    font: normal normal 50px 'Do Hyeon', sans-serif;
+    color: #333;
+}
+/* 마이페이지 */
+.contents_mypage {
+    width: 1250px;
+    height: 700px;
+    margin: 0 auto;
+    padding-top: 10px;
+}
+/* 마이페이지윗부분 */
+.mypage_header_box {
+    border: 1px solid lightgray;
+    width: 1199px;
+    height: 60px;
+    margin: 0 auto;
+    padding-top: 25px;
+    padding-left: 50px;
+    float: left;
+}
+/* 마이페이지 윗부분 라벨 */
+.my_page_label {
+    padding-top: 10px;
+    font: normal bold 15px 'Nanum Gothic', sans-serif ;
+    color: gray;
+}
+/* 마이페이지 사이드바 */
+.mypage_sidebar_box {
+    border: 1px solid lightgray;
+    width: 135px;
+    height: 550px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-right: 20px;
+    padding-top: 15px;
+    padding-left: 15px;
+    float: left;
+}
+
+/* 마이페이지 사이드바 메뉴 */
+.mypage_side_label {
+    margin-bottom: 15px;
+    text-align: left;
+    font: normal normal 16px 'Do Hyeon', sans-serif;
+    color: #333;
+}
+.mypage_side_list {
+    margin-bottom: 14px;
+    text-align: left;
+    font: normal normal 13px 'Nanum Gothic', sans-serif;
+    color: gray;
+}
+.mypage_side_list:hover {
+    color: #1B7850;
+    transition-duration: 0.3s;
+}
+.mypage_label {
+    margin-bottom: 10px;
+    text-align: left;
+    font: normal normal 20px 'Do Hyeon', sans-serif;
+    color: #333;
+}
+/* 마이페이지 콘텐츠 테두리부분 */
+
+.mypage_content_box {
+    /* border: 1px solid lightgray; */
+    width: 1010px;
+    height: 200px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 30px;
+    padding-top: 10px;
+    padding-left: 25px;
+    float: left;
+}
+/* 마이페이지 콘텐츠 */
+.mypage_content_list {
+    /* border: 1px solid lightgray; */
+    width: 110px;
+    height: 15px;
+    /* margin-top: 20px; */
+    /* margin-bottom: 20px; */
+    /* margin-left: 30px; */
+    padding-top: 10px;
+    padding-left: 25px;
+    float: left;
+}
+/* 마이페이지 메인화면 콘텐츠 리스트 */
+.mypage_content_list_main {
+    border: 1px solid lightgray;
+    width: 205px;
+    height: 140px;
+    /* margin-top: 20px; */
+    /* margin-bottom: 20px; */
+    margin-left: 10px;
+    padding-top: 10px;
+    padding-left: 25px;
+    float: left;
+}
+
+
+
+
+
