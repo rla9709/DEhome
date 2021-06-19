@@ -4,6 +4,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+request.setCharacterEncoding("UTF-8");
+
 	String tr_user_nick="";
 	if (request.getParameter("tr_user_nick") != null) {
 		tr_user_nick = request.getParameter("tr_user_nick");
@@ -32,7 +34,7 @@
 	dto.setTr_board_date(new Timestamp(System.currentTimeMillis()));
 	dto.setTr_board_count(tr_board_count);
 	dto.setTr_board_pw(request.getParameter("tr_b_pw"));
-	
+	//System.out.print("nick = "+tr_user_nick);
 	int re = dao.insertTradeBoard(dto);
 	
 	if(re == 1){

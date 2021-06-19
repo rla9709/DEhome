@@ -7,10 +7,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="board.js" charset="utf-8"></script>
+<script type="text/javascript" src="tr_board.js" charset="utf-8"></script>
 </head>
 <body>
 	<%	
+		request.setCharacterEncoding("UTF-8");
+	
 		int tr_b_id =Integer.parseInt(request.getParameter("tr_board_id"));
 		String tr_b_pw = request.getParameter("tr_b_pw");
 		TradeBoardDAO dao = TradeBoardDAO.getInstance();

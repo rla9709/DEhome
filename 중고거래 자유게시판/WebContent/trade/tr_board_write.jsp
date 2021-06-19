@@ -3,7 +3,15 @@
 <%@page import="trade.TradeBoardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
+<%	
+
+request.setCharacterEncoding("UTF-8");
+
+	String tr_user_nick = "";
+	if (request.getParameter("tr_user_nick") != null) {
+		tr_user_nick = request.getParameter("tr_user_nick");
+	}
+
 	String pageNum = request.getParameter("pageNum");
 	int tr_board_id = 0;
 	
@@ -38,6 +46,7 @@
         <div id="write">
             <form action="tr_board_write_ok.jsp?" method="post" name="form">
             <input type="hidden" name="tr_board_id" value="<%=tr_board_id%>">
+            <input type="hidden" name="tr_user_nick" value="<%=nick%>">
               <p><span>자유게시판</span> 글쓰기</p>
               <table>
                 <tr>

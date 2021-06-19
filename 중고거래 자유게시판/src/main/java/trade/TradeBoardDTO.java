@@ -55,34 +55,52 @@ public class TradeBoardDTO {
 	public String getTr_board_title() {
 		return tr_board_title;
 	}
-	public void setTr_board_title(String tr_board_title) {
-		this.tr_board_title = tr_board_title;
-	}
+
+
 	public String getTr_board_content() {
 		return tr_board_content;
 	}
+
+
 	public void setTr_board_content(String tr_board_content) {
 		this.tr_board_content = tr_board_content;
 	}
+
+
 	public Timestamp getTr_board_date() {
 		return tr_board_date;
 	}
+
+
 	public void setTr_board_date(Timestamp tr_board_date) {
 		this.tr_board_date = tr_board_date;
 	}
+
+
 	public int getTr_board_count() {
 		return tr_board_count;
 	}
+
+
 	public void setTr_board_count(int tr_board_count) {
 		this.tr_board_count = tr_board_count;
 	}
+
+
 	public String getTr_board_pw() {
 		return tr_board_pw;
 	}
+
+
 	public void setTr_board_pw(String tr_board_pw) {
 		this.tr_board_pw = tr_board_pw;
 	}
 
+
+	public void setTr_board_title(String tr_board_title) {
+		this.tr_board_title = tr_board_title;
+	}
+	
 
    	
 }

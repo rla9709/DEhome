@@ -10,19 +10,22 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="../js/tr_board.js" charset="utf-8"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Nanum+Gothic&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../css/header_footer.css" />
-    <link rel="stylesheet" href="../css/my_page.css" />
     <link rel="stylesheet" href="../css/login.css" />
     <link rel="stylesheet" href="../css/reset.css" />
     <link rel="stylesheet" href="../css/trade_board.css" />
+
 </head>
 <body>
 <%
+request.setCharacterEncoding("UTF-8");
+
 	String tr_user_nick = "";
 	if (request.getParameter("tr_user_nick") != null) {
 		tr_user_nick = request.getParameter("tr_user_nick");
@@ -46,7 +49,17 @@
         <div id="trade_board">
             <div id="board_title">
                 자유게시판
+            <%
+            	if(nick == null){
+           	%>
+                <input type="button" value="글쓰기" onclick="no()">
+            <%
+            	}else{
+            %>
                 <input type="button" value="글쓰기" onclick="location.href='tr_board_write.jsp?&pageNum=<%= pageNum %>'">
+			<%
+            	}
+			%>            		
             </div>
 
             <table id="table" width="800" cellspacing="0" >
@@ -75,7 +88,7 @@
 							<%=tr_board_id %>
 						</td>
 						<td>
-							<a href="tr_board_show.jsp?tr_user_nick=<%=tr_user_nick %>&tr_board_id=<%= tr_board_id %>&pageNum=<%=pageNum%>">
+							<a href="tr_board_show.jsp?tr_user_nick=<%=tr_user_nick %>&tr_board_id=<%= tr_board_id%>&pageNum=<%=pageNum%>">
 								<%=tr_board_title %>
 							</a>
 						</td>

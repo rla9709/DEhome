@@ -23,9 +23,6 @@ private static TradeBoardDAO instance = new TradeBoardDAO();
 	}
 	
 	private Connection getConnection() throws Exception {
-//		Context initCTX = new InitialContext();
-//		Context envCTX = (Context)initCTX.lookup("java:comp/env");
-//		DataSource ds = (DataSource)envCTX.lookup("jdbc/mysql");
 		Context ctx = new InitialContext();
 		DataSource ds = (DataSource)ctx.lookup("java:comp/env/jdbc/mysql");
 		return ds.getConnection();
@@ -43,34 +40,32 @@ private static TradeBoardDAO instance = new TradeBoardDAO();
 		
 		try {
 			con = getConnection();
-			sql = "select max(board_id) from trade_board";
-			pstmt = con.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {//°ªÀÌ ÀÖÀ¸¸é Âü
-				number = rs.getInt(1)+1;
-			}else {
-				number = 1;
-			}
+//			sql = "select max(board_id) from trade_board";
+//			pstmt = con.prepareStatement(sql);
+//			rs = pstmt.executeQuery();
+//			
+//			if(rs.next()) {//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+//				number = rs.getInt(1)+1;
+//			}else {
+//				number = 1;
+//			}
 			
 			sql="insert into trade_board(board_id, user_nick, board_title, board_content, "
 					+ "board_date, board_count, board_pw)"
 					+ "values(?,?,?,?,?,?,?)";
 			pstmt = con.prepareStatement(sql);
 			
-			pstmt.setInt(1, number);
+			pstmt.setInt(1, dto.getTr_board_id());
 			pstmt.setString(2, dto.getTr_user_nick());
-			pstmt.setString(3, dto.getTr_board_title());
+			pstmt.setString(3,dto.getTr_board_title());
 			pstmt.setString(4, dto.getTr_board_content());
 			pstmt.setTimestamp(5, dto.getTr_board_date());
 			pstmt.setInt(6, dto.getTr_board_count());
 			pstmt.setString(7, dto.getTr_board_pw());
 			pstmt.executeUpdate();
 	
-			System.out.println("Ãß°¡ ¼º°ø");
 			System.out.println(dto.getTr_board_pw());
 		} catch (Exception e) {
-			System.out.println("Ãß°¡ ½ÇÆÐ");
 			e.printStackTrace();
 		}finally {
 			try {
@@ -118,8 +113,15 @@ private static TradeBoardDAO instance = new TradeBoardDAO();
 			}
 //			stmt = con.createStatement();
 			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-			// ¸Å°³º¯¼ö 2°³ -> ÆäÀÌÂ¡ -½ºÅ©·Ñ, Ä¿¼­¿¡ µû¶ó
+			// ï¿½Å°ï¿½ï¿½ï¿½ï¿½ï¿½ 2ï¿½ï¿½ -> ï¿½ï¿½ï¿½ï¿½Â¡ -ï¿½ï¿½Å©ï¿½ï¿½, Ä¿ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			sql = "select * from trade_board order by board_id desc";
+//			sql = "select t1.BOARD_ID, t1.USER_NICK, t1.BOARD_TITLE, t1.BOARD_CONTENT"
+//					+ ", t1.BOARD_DATE,t1.BOARD_COUNT,t1.BOARD_PW,t1.BOARD_PAGENUM"
+//					+ "from TRADE_BOARD t1, user t2 where t1.user_nick = t2.user_nick order by BOARD_ID desc";
+//			String sql = "select n.* "
+//					+ "from non_face n join user_tbl u "
+//					+ "on n.user_tbl_u_id = u.u_id "
+//					+ "order by u.u_manager desc, n.nf_num desc";
 			rs = stmt.executeQuery(sql);
 			if (rs.next()) {
 				rs.absolute(absolutePage);
@@ -159,7 +161,142 @@ private static TradeBoardDAO instance = new TradeBoardDAO();
 		return tradeBoardList;
 	}
 	
-	public TradeBoardDTO getTradeBoard(int tr_b_id, boolean b) throws Exception{
+	
+	public ArrayList<TradeBoardDTO> myTradeBoardList(String nick, String pageNum) {
+		Connection con = null;
+		Statement stmt = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "";
+		ResultSet pageSet = null;
+		int dbCount = 0;
+		int absolutePage = 1;
+		
+		
+		ArrayList<TradeBoardDTO> tradeBoardList = new ArrayList<TradeBoardDTO>();
+		try {
+			con = getConnection();
+			stmt = con.createStatement();
+			sql = "select count(board_id) from trade_board where user_nick=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, nick);
+			pageSet =  pstmt.executeQuery();
+			
+			if (pageSet.next()) {
+				dbCount = pageSet.getInt(1);
+				pageSet.close();
+				stmt.close();
+			}
+			
+			if (dbCount % TradeBoardDTO.pageSize == 0) {
+				TradeBoardDTO.pageCount =  dbCount / TradeBoardDTO.pageSize;
+			}else {
+				TradeBoardDTO.pageCount =  dbCount / TradeBoardDTO.pageSize + 1;
+			}
+			
+			if (pageNum != null) {
+				TradeBoardDTO.pageNum = Integer.parseInt(pageNum);
+				absolutePage = (TradeBoardDTO.pageNum-1) * TradeBoardDTO.pageSize + 1;
+			}
+			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			
+			
+			sql = "select * from trade_board where USER_NICK=? order by board_id desc";
+			pstmt = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			pstmt.setString(1, nick);
+			rs = pstmt.executeQuery();
+			
+			
+			if (rs.next()) {
+				rs.absolute(absolutePage);
+				int count = 0;
+				while(count < TradeBoardDTO.pageSize) {
+					TradeBoardDTO dto = new TradeBoardDTO();
+					dto.setTr_board_id(rs.getInt(1));
+					dto.setTr_user_nick(rs.getString(2));
+					dto.setTr_board_title(rs.getString(3));
+					dto.setTr_board_content(rs.getString(4));
+					dto.setTr_board_date(rs.getTimestamp(5));
+					dto.setTr_board_count(rs.getInt(6));
+					dto.setTr_board_pw(rs.getString(7));
+					
+					tradeBoardList.add(dto);
+					
+					if (rs.isLast()) {
+						break;	
+					}else {
+						rs.next();
+					}
+					count ++;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) rs.close();
+				if (stmt != null) stmt.close();
+				if (pstmt != null) pstmt.close();
+				if (con != null) con.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return tradeBoardList;
+	}
+//	
+//	public ArrayList<TradeBoardDTO> myTradeBoardList(String nick, String pageNum) {
+//		Connection con = null;
+//		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+//		String sql = "";
+//		
+//		
+//		ArrayList<TradeBoardDTO> tradeBoardList = new ArrayList<TradeBoardDTO>();
+//		try {
+//			con = getConnection();
+//			sql = "select * from trade_board where USER_NICK=? order by board_id desc";
+//			pstmt = con.prepareStatement(sql);
+//			pstmt.setString(1, nick);
+//			rs =  pstmt.executeQuery();
+//			
+//			System.out.println("ë‹‰ :"+nick);
+//			
+//			while (rs.next()) {
+//					TradeBoardDTO dto = new TradeBoardDTO();
+//					dto.setTr_board_id(rs.getInt(1));
+//					dto.setTr_user_nick(rs.getString(2));
+//					dto.setTr_board_title(rs.getString(3));
+//					dto.setTr_board_content(rs.getString(4));
+//					dto.setTr_board_date(rs.getTimestamp(5));
+//					dto.setTr_board_count(rs.getInt(6));
+//					dto.setTr_board_pw(rs.getString(7));
+//					
+//					tradeBoardList.add(dto);
+//					System.out.println("ë¦¬ìŠ¤íŠ¸");
+////					if (rs.isLast()) {
+////						break;	
+////					}else {
+////						rs.next();
+////					}
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} finally {
+//			try {
+//				if (rs != null) rs.close();
+//				if (pstmt != null) pstmt.close();
+//				if (con != null) con.close();
+//			} catch (Exception e2) {
+//				e2.printStackTrace();
+//			}
+//		}
+//		
+//		return tradeBoardList;
+//	}
+	
+	public void hitTradeBoard(int tr_b_id) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		PreparedStatement pstmtUp=null;
@@ -169,30 +306,11 @@ private static TradeBoardDAO instance = new TradeBoardDAO();
 		
 		try {
 			con = getConnection();
-			if (b = true) {
 				sql = "update trade_board set board_count = board_count +1 where board_id = ?";
 				pstmtUp = con.prepareStatement(sql);
 				pstmtUp.setInt(1, tr_b_id);
 				pstmtUp.executeUpdate();
 				pstmtUp.close();
-			}
-			
-			sql = "select * from trade_board where board_id = ?";
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, tr_b_id);
-			rs = pstmt.executeQuery();
-			
-			if (rs.next()) {
-				dto = new TradeBoardDTO();
-				dto.setTr_board_id(rs.getInt(1));
-				dto.setTr_user_nick(rs.getString(2));
-				dto.setTr_board_title(rs.getString(3));
-				dto.setTr_board_content(rs.getString(4));
-				dto.setTr_board_date(rs.getTimestamp(5));
-				dto.setTr_board_count(rs.getInt(6));
-				dto.setTr_board_pw(rs.getString(7));
-				
-			}
 		} catch (Exception e) {
 			 e.printStackTrace();
 		}finally {
@@ -210,9 +328,62 @@ private static TradeBoardDAO instance = new TradeBoardDAO();
 				 e2.printStackTrace();
 			}
 		}
+			
+	}
+	public TradeBoardDTO getTradeBoard(int tr_b_id, boolean b) throws Exception{
+		Connection con=null;
+		PreparedStatement pstmtUp=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs = null;
+		String sql ="";
+		TradeBoardDTO dto = null;
+		
+		try {
+			con = getConnection();
+			if (b = false) {
+				sql = "update trade_board set board_count = board_count +1 where board_id = ?";
+				pstmtUp = con.prepareStatement(sql);
+				pstmtUp.setInt(1, tr_b_id);
+				pstmtUp.executeUpdate();
+				pstmtUp.close();
+			}
+			
+				sql = "select * from trade_board where board_id = ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, tr_b_id);
+				rs = pstmt.executeQuery();
+				
+			if (rs.next()) {
+				dto = new TradeBoardDTO();
+				dto.setTr_board_id(rs.getInt(1));
+				dto.setTr_user_nick(rs.getString(2));
+				dto.setTr_board_title(rs.getString(3));
+				dto.setTr_board_content(rs.getString(4));
+				dto.setTr_board_date(rs.getTimestamp(5));
+				dto.setTr_board_count(rs.getInt(6));
+				dto.setTr_board_pw(rs.getString(7));
+			}
+		}
+		 catch (Exception e) {
+			 e.printStackTrace();
+		}finally {
+			try {
+				if (rs!= null) {
+					rs.close();
+				}
+				if (pstmt!= null) {
+					pstmt.close();
+				}
+				if (con!= null) {
+					con.close();
+				}
+			} catch (Exception e2) {
+				 e2.printStackTrace();
+			}
+		}
+	
 		return dto;
 	}
-	
 
 
 	public int deleteTradeBoard(int tr_b_id, String tr_b_pwd) {
@@ -294,8 +465,8 @@ private static TradeBoardDAO instance = new TradeBoardDAO();
 							+ "set board_title=?, board_content=? "
 							+ "where board_id = ?";
 					pstmt = con.prepareStatement(sql);
-					pstmt.setString(1, HanConv.toKor(dto.getTr_board_title()));
-					pstmt.setString(2, HanConv.toKor(dto.getTr_board_content()));
+					pstmt.setString(1,dto.getTr_board_title());
+					pstmt.setString(2,dto.getTr_board_content());
 					pstmt.setInt(3, dto.getTr_board_id());
 					pstmt.executeUpdate();
 					re = 1;

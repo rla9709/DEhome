@@ -4,6 +4,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+
+
+request.setCharacterEncoding("UTF-8");
+
 	String tr_user_nick = "";
 	if (request.getParameter("tr_user_nick") != null) {
 		tr_user_nick = request.getParameter("tr_user_nick");
@@ -20,6 +24,7 @@
 		tr_user_nick = dto.getTr_user_nick();
 		tr_board_title = dto.getTr_board_title();
 		tr_board_content = dto.getTr_board_content();
+		tr_board_content = tr_board_content.replace("<br>", "\r\n");
 		tr_board_count = dto.getTr_board_count();
 	}
 	

@@ -13,6 +13,8 @@
 <jsp:setProperty property="*" name="dto"/>
 
 <%
+request.setCharacterEncoding("UTF-8");
+
 	TradeBoardDAO dao = TradeBoardDAO.getInstance();
 	dto.setTr_board_id(Integer.parseInt(request.getParameter("tr_board_id")));
 	dto.setTr_board_pw(request.getParameter("tr_b_pw"));
