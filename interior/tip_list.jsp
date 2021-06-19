@@ -1,6 +1,6 @@
 <%@page import="interior.InteriorDTO"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="interior.InteriorDAO"%>
+<%@page import="interior.InteriorTipDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -20,12 +20,12 @@
     <link rel="stylesheet" href="../css/interior_tip.css" />
     
 <%
-	//utf8 인코딩
-	request.setCharacterEncoding("utf-8");
-
-	InteriorDAO dao = InteriorDAO.getInstance();
-	String category = request.getParameter("category");
-%>
+    	//utf8 인코딩
+    	request.setCharacterEncoding("utf-8");
+     
+    	InteriorTipDAO dao = InteriorTipDAO.getInstance();
+    	String category = request.getParameter("category");
+    %>
 </head>
 <body>
 <%@include file="../headerfooter/header.jsp" %>  
@@ -42,7 +42,7 @@
 		} else {
 %>
         <input type="button" value="팁 작성하기"
-          	   onclick="location.href='tip_write.jsp'" />
+          	   onclick="location.href='../interior/tip_write.jsp'" />
 <%
 		}
 
@@ -50,56 +50,56 @@
 			if(category.equals("construct")) {
 %>
 					<p>
-	        			<span class="font_green">시공 TIP</span>
+	        			<span class="font_green">인테리어 시공 TIP</span>
 	        			인테리어 시공 꿀팁
 	        		</p>
 <% 
 			} else if(category.equals("storage")) {
 %>
 					<p>
-	        			<span class="font_green">수납 TIP</span>
+	        			<span class="font_green">차곡차곡 수납 TIP</span>
 	        			수납 인테리어 꿀팁
 	        		</p>
 <% 
 			} else if(category.equals("decorate")) {
 %>
 					<p>
-	        			<span class="font_green">꾸미기 TIP</span>
+	        			<span class="font_green">인테리어 꾸미기 TIP</span>
 	        			꾸미기 꿀팁
 	        		</p>
 <% 
 			} else if(category.equals("cleaning")) {
 %>
 				<p>
-        			<span class="font_green">청소 TIP</span>
+        			<span class="font_green">꼼꼼한 청소 TIP</span>
         			청소 꿀팁
         		</p>
 <% 
 			} else if(category.equals("diy")) {
 %>
 				<p>
-        			<span class="font_green">DIY TIP</span>
+        			<span class="font_green">인테리어 DIY TIP</span>
         			DIY 인테리어 꿀팁
         		</p>
 <% 
 			} else if(category.equals("reform")) {
 %>
 				<p>
-        			<span class="font_green">리폼 TIP</span>
+        			<span class="font_green">새 것 같은 리폼 TIP</span>
         			인테리어 리폼 꿀팁
         		</p>
 <% 
 			} else if(category.equals("kitchen")) {
 %>
 				<p>
-        			<span class="font_green">주방/욕실 TIP</span>
+        			<span class="font_green">주방 및 욕실 TIP</span>
         			주방/욕실 인테리어 꿀팁
         		</p>
 <% 
 			} else if(category.equals("lighting")) {
 %>
 				<p>
-        			<span class="font_green">전기/조명 TIP</span>
+        			<span class="font_green">전기 및 조명 TIP</span>
         			전기/조명 인테리어 꿀팁
         		</p>
 <%
@@ -129,21 +129,37 @@
 			int bookmark = dto.getTip_bookmark();
 			sum++;
 			
+			pageContext.setAttribute("tip_no", tip_no);
+			pageContext.setAttribute("title", title);
+			pageContext.setAttribute("photo", photo);
+			pageContext.setAttribute("count", count);
+			pageContext.setAttribute("bookmark", bookmark);
+			pageContext.setAttribute("category", category);
 %>
           <td>
-            <a href="tip_page.jsp?tip_no=<%= tip_no %>&category=<%= category %>">
+<%
+		if(id == null) {
+%>
+            <a href="../login/login.jsp">
+<%
+		} else {
+%>
+            <a href="tip_page.jsp?tip_no=${tip_no}&category=${category}">
+<%
+		}
+%>
               <div id="shop">
                 <div class="shop_img">
                   <input type="button" />
-                  <img src="<%= photo%>" />
+                  <img src="${photo}" />
                 </div>
                 <div class="shop_ex">
-                  <div class="shop_name"><%= title%></div>
+                  <div class="shop_name">${title}</div>
                   <p>
                                      조회수 
-                    <span class="font_green"><%= count%></span> 
+                    <span class="font_green">${count}</span> 
                     · 스크랩 
-                    <span class="font_green"><%= bookmark%></span>
+                    <span class="font_green">${bookmark}</span>
                   </p>
                 </div>
               </div>

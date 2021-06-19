@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 
 <!-- 파일업로드 위한 라이브러리 임포트 -->
-<%@ page import="interior.InteriorDAO" %>
+<%@ page import="interior.InteriorTipDAO" %>
 <%@ page import="java.io.File" %>
 
 <!-- 파일 이름이 동일한게 나오면 자동으로 다른걸로 바꿔 주는것 -->
@@ -15,7 +15,7 @@
 	request.setCharacterEncoding("utf-8");
 %>
 <!DOCTYPE html>
-<html>
+<html> 
 <head>
 <meta charset="UTF-8">
 <title>팁 작성</title>

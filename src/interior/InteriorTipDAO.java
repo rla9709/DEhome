@@ -10,13 +10,10 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import myUtil.HanConv;
-import trade.TradeDTO;
-
-public class InteriorDAO {
-	private static InteriorDAO instance = new InteriorDAO();
+public class InteriorTipDAO {
+	private static InteriorTipDAO instance = new InteriorTipDAO();
 	
-	public static InteriorDAO getInstance() {
+	public static InteriorTipDAO getInstance() {
 		return instance;
 	}
 	
@@ -191,4 +188,113 @@ public class InteriorDAO {
 			}
 			return dto;
 		}
+		
+		// 내가 쓴 인테리어 팁 뿌리는 메소드
+		public ArrayList<InteriorDTO> myInteriorTipList(String user_nick) {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			String sql = "";
+			
+			ArrayList<InteriorDTO> tipList = new ArrayList<InteriorDTO>();
+			
+			try {
+				sql = "select tip_no"
+						+ ", tip_title"
+						+ ", tip_file"
+						+ ", tip_count"
+						+ ", tip_bookmark"
+						+ ", user_nick"
+						+ ", category "
+						+ "from interior_tip "
+						+ "where user_nick = ? "
+						+ "order by tip_no desc";
+				
+				con = getConnection();
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, user_nick);
+				rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					InteriorDTO dto = new InteriorDTO();
+					dto.setTip_no(rs.getInt(1));
+					dto.setTip_title(rs.getString(2));
+					dto.setTip_date(rs.getTimestamp(3));
+					dto.setTip_count(rs.getInt(4));
+					dto.setTip_bookmark(rs.getInt(5));
+					dto.setTip_user_nick(rs.getString(6));
+					dto.setTip_category(rs.getString(7));
+					
+					tipList.add(dto);
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (rs != null) rs.close();
+					if (pstmt != null) pstmt.close();
+					if (con != null) con.close();
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+			
+			return tipList;
+		}
+		
+		// 내가 북마크한 인테리어 팁 뿌리는 메소드
+				public ArrayList<InteriorDTO> myBookmarkTipList(String user_nick) {
+					Connection con = null;
+					PreparedStatement pstmt = null;
+					ResultSet rs = null;
+					String sql = "";
+					
+					ArrayList<InteriorDTO> tipList = new ArrayList<InteriorDTO>();
+					
+					try {
+						sql = "select t1.tip_no"
+								+ ", t1.user_nick"
+								+ ", t1.tip_title"
+								+ ", t1.tip_file"
+								+ ", t1.tip_count"
+								+ ", t1.tip_bookmark"
+								+ ", t1.category "
+								+ "from interior_tip t1, bookmark t2 "
+								+ "where t1.tip_no = t2.bm_no "
+								+ "and t2.user_nick = ? "
+								+ "order by tip_no desc";
+						
+						con = getConnection();
+						pstmt = con.prepareStatement(sql);
+						pstmt.setString(1, user_nick);
+						rs = pstmt.executeQuery();
+						
+						while(rs.next()) {
+							InteriorDTO dto = new InteriorDTO();
+							dto.setTip_no(rs.getInt(1));
+							dto.setTip_user_nick(rs.getString(2));
+							dto.setTip_title(rs.getString(3));
+							dto.setTip_count(rs.getInt(4));
+							dto.setTip_count(rs.getInt(5));
+							dto.setTip_bookmark(rs.getInt(6));
+							dto.setTip_category(rs.getString(7));
+							
+							tipList.add(dto);
+						}
+						
+					} catch (Exception e) {
+						e.printStackTrace();
+					} finally {
+						try {
+							if (rs != null) rs.close();
+							if (pstmt != null) pstmt.close();
+							if (con != null) con.close();
+						} catch (Exception e2) {
+							e2.printStackTrace();
+						}
+					}
+					
+					return tipList;
+				}
 }

@@ -1,4 +1,4 @@
-<%@page import="interior.InteriorDAO"%>
+<%@page import="interior.InteriorTipDAO"%>
 <%@page import="interior.InteriorDTO"%>
 <%@page import="java.sql.Timestamp"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -8,7 +8,7 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 	dto.setTip_date(new Timestamp(System.currentTimeMillis()));
-	InteriorDAO manager = InteriorDAO.getInstance();
+	InteriorTipDAO manager = InteriorTipDAO.getInstance();
 	
 	// 팁 작성후 어디로 보낼지 선택하기 위한 변수
 	String cat = request.getParameter("tip_category");
@@ -16,7 +16,7 @@
 	int re = manager.insertTip(dto, nick);
 	
 	if(re == 1) {
-%>
+%> 
 	<script>
 		alert("글을 등록 하셨습니다.");
 		<%
