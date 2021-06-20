@@ -59,7 +59,7 @@
       <div class="contents_mypage">
         <a href="mypage.html"></a><h2 class="page_title">MY PAGE</h2></a>
         <div class="mypage_header_box">
-          <p class="my_page_label">${id }님 안녕하세요</p>
+          <p class="my_page_label">${nick }님 안녕하세요</p>
         </div>
         <div class="mypage_sidebar_box">
           <ul>
@@ -80,9 +80,9 @@
               <li class="mypage_side_list"><a href="my_trade_list.jsp">나의 거래 ></a></li>
               <li class="mypage_side_list_1" style="color: #1B7850"><a href="my_trade_board.jsp">내가 작성한 글 ></a>
               	<ul class="mypage_side_list_2">
-              		<li><a href="#">자유게시판</a></li>
+              		<li><a href="my_trade_board.jsp">자유게시판</a></li>
               		<li><a href="my_interior_tip.jsp">인테리어 팁</a></li>
-              		<li><a href="#">시공리뷰</a></li>
+              		<li><a href="my_review.jsp">시공리뷰</a></li>
               		<li><a href="#">QNA</a></li>
               	</ul>
               </li>

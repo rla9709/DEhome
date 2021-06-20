@@ -92,9 +92,10 @@ function check_ok(){
 	
 	if(document.getElementsByName("delete")[0].isChecked == false){
 		alert("회원 탈퇴에 동의하세요");
-	}
+	}else{
 		
 	document.delete_form.submit();
+	}
 }
 
 

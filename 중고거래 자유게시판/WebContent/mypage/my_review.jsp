@@ -1,3 +1,4 @@
+<%@page import="interior.MyInteriorReviewDAO"%>
 <%@page import="interior.InteriorReviewDTO"%>
 <%@page import="interior.InteriorReviewDAO"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -38,7 +39,7 @@ request.setCharacterEncoding("UTF-8");
 		pageNum= "1";
 	}
 	
-	InteriorReviewDAO dao = InteriorReviewDAO.getinstance();
+	MyInteriorReviewDAO dao = MyInteriorReviewDAO.getinstance();
 	ArrayList<InteriorReviewDTO> myReviewList = dao.myReview(nick);
 	
 	int re_no,com_rating = 0;
@@ -126,33 +127,10 @@ request.setCharacterEncoding("UTF-8");
 	<%		
 		}
 	%>
-        
-      <%--<a href="review_page.html">
-          <div class="recon_01">
-            <p>
-              <span>집꾸집꾸</span>
-              <span>(주)제이디자인</span>
-              <img src="../images/star_yellow_15.png" />
-              <span>3.5</span>
-            </p>
-            <p>
-              전문가선생님께서 저희가 원했던 인테리어보다 훨씬 더 만족스러운
-              인테리어를 해주시고자 노력해주셔서 감사했습니다 ! 그리고 저희 집을
-              담당하시면서 고생도 많으셨을텐데 끝까지 책임지시고 열정을 많이
-              쏟아주셔서 너무 좋았습니다! 공사가 끝나고 한달반의 시간이 지난 지금
-              저희 가족들은 보면볼수록 화장실, 거실, 주방 등등! 어느 한곳빠진데
-              없이 다 너무 이뻐서 매우 만족하고있습니다! 공사작업해주신 모든
-              분들께 감사드립니다
-            </p>
-            
-          </div>
-        </a>  --%>  
-        
         <div id="move_btn2">
           <input type="button" value="더보기" />
         </div>
       </div>
-    <!-- </div> -->
 
       
 <%@include file="../headerfooter/footer.jsp" %>
