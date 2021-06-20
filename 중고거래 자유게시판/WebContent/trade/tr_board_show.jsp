@@ -1,7 +1,6 @@
 <%@page import="java.net.URLDecoder"%>
 <%@page import="java.net.URLEncoder"%>
 <%@page import="java.net.HttpCookie"%>
-<%@page import="myUtil.HanConv"%>
 <%@page import="java.sql.Timestamp"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.ArrayList"%>
@@ -9,7 +8,6 @@
 <%@page import="trade.TradeBoardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,11 +52,13 @@
 	}else{
 		hitUp  = false;
 	}
-	%>
-	<%--
+	System.out.println("내 닉 : "+nick);
+	System.out.println("작성자 : "+tr_user_nick);
 	System.out.println("t/f : "+tr_user_nick.equals(nick));
 	System.out.println("hitUp : "+hitUp);
-	--%>
+	%>
+	
+
 	<%
 	Cookie[] cookies = request.getCookies();
 	Cookie viewCookie = null;
@@ -122,29 +122,6 @@ if(cookies != null){
 	}
 	%>
 	
-	<%--
-	Cookie[] cookies = request.getCookies();
-	boolean visitor = false;
-	
-	for (Cookie cookie : cookies) {
-		String cookieName =  URLDecoder.decode(cookie.getName(), "UTF-8");
-		String cookieValue =  URLDecoder.decode(cookie.getValue(), "UTF-8");
-		System.out.println("쿠키이름 : " + cookieName);
-		System.out.println("쿠키값 : " + cookieValue);
-	
-		if (cookieName.equals(nick)) {
-			visitor = true;
-		}
-	}
-	
-	if (visitor == false) {
-		Cookie cookieNew = new Cookie(URLEncoder.encode(nick, "UTF-8"), URLEncoder.encode(Integer.toString(tr_board_id), "UTF-8"));
-		cookieNew.setMaxAge(60*60*24*7);
-		response.addCookie(cookieNew);
-	}
-	
-	
---%>
     
     <!-- --------------------- 컨텐츠 시작 ---------------------- -->
      <center>
@@ -170,12 +147,24 @@ if(cookies != null){
             </tr>
             <tr>
               <td class="">
-                <input type="button" value="목록으로"
-                		onclick="location.href='tr_board_list.jsp?pageNum=<%= pageNum %>&tr_user_nick=<%=tr_user_nick %>'" >
-                <input type="button" value="수정하기" 
-                		onclick="location.href='tr_board_edit.jsp?tr_user_nick=<%=tr_user_nick %>&tr_board_id=<%= tr_board_id %>&pageNum=<%=pageNum%>'">
-                <input type="button" value="삭제하기"
-                		onclick="location.href='tr_board_delete.jsp?tr_user_nick=<%=tr_user_nick %>&tr_board_id=<%= tr_board_id %>&pageNum=<%=pageNum%>'">
+              <%
+              	if(nick.equals(tr_user_nick)){
+              %>
+	                <input type="button" value="목록으로"
+	                		onclick="location.href='tr_board_list.jsp?pageNum=<%= pageNum %>'" >
+	                <input type="button" value="수정하기" 
+	                		onclick="location.href='tr_board_edit.jsp?tr_board_id=<%= tr_board_id %>&pageNum=<%=pageNum%>'">
+	                <input type="button" value="삭제하기"
+	                		onclick="location.href='tr_board_delete.jsp?tr_board_id=<%= tr_board_id %>&pageNum=<%=pageNum%>'">
+              <%		
+              	}else{
+              %>
+	                <input type="button" value="목록으로"
+	                		onclick="location.href='tr_board_list.jsp?pageNum=<%= pageNum %>'" >
+              <%
+              	}
+              %>
+              
               </td>
             </tr>
           </table>

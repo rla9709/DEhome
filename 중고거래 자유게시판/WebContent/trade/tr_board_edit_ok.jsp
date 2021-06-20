@@ -1,3 +1,4 @@
+<%@page import="myUtil.HanConv"%>
 <%@page import="trade.TradeBoardDTO"%>
 <%@page import="trade.TradeBoardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -18,8 +19,8 @@ request.setCharacterEncoding("UTF-8");
 	TradeBoardDAO dao = TradeBoardDAO.getInstance();
 	dto.setTr_board_id(Integer.parseInt(request.getParameter("tr_board_id")));
 	dto.setTr_board_pw(request.getParameter("tr_b_pw"));
-	dto.setTr_board_title(request.getParameter("tr_b_title"));
-	dto.setTr_board_content(request.getParameter("tr_b_content"));
+	dto.setTr_board_title(HanConv.toKor(request.getParameter("tr_b_title")));
+	dto.setTr_board_content(HanConv.toKor(request.getParameter("tr_b_content")));
 	int re = dao.editTradeBoard(dto);
 	
 	if(re == 1){

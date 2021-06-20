@@ -80,6 +80,7 @@ request.setCharacterEncoding("UTF-8");
                 	tr_board_date = dto.getTr_board_date();
                 	tr_board_count = dto.getTr_board_count();
                 	
+                	 //java.net.URLEncoder.encode(ch2, "utf-8"); 
                 %>
                 	<tr bgcolor="#f7f7f7" 
                 		onmouseover="this.style.backgroundColor='#eeeeef'" 
@@ -88,7 +89,7 @@ request.setCharacterEncoding("UTF-8");
 							<%=tr_board_id %>
 						</td>
 						<td>
-							<a href="tr_board_show.jsp?tr_user_nick=<%=tr_user_nick %>&tr_board_id=<%= tr_board_id%>&pageNum=<%=pageNum%>">
+							<a href="tr_board_show.jsp?tr_user_nick=<%= java.net.URLEncoder.encode(tr_user_nick, "utf-8") %>&tr_board_id=<%= tr_board_id%>&pageNum=<%=pageNum%>">
 								<%=tr_board_title %>
 							</a>
 						</td>

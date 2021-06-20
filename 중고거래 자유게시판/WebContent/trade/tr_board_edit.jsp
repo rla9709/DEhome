@@ -16,7 +16,7 @@ request.setCharacterEncoding("UTF-8");
 	int tr_b_id = Integer.parseInt(request.getParameter("tr_board_id"));
 	
 	TradeBoardDAO dao = TradeBoardDAO.getInstance();
-	TradeBoardDTO dto = dao.getTradeBoard(tr_b_id,false);
+	TradeBoardDTO dto = dao.getTradeBoard(tr_b_id,true);
 	int tr_board_id=0, tr_board_count=0;
 	String tr_board_title="", tr_board_content="", tr_board_pw="";
 	if(dto != null){
@@ -54,7 +54,7 @@ request.setCharacterEncoding("UTF-8");
       <center>
       <content>
         <div id="edit">
-            <form action="tr_board_edit_ok.jsp?tr_user_nick=<%=tr_user_nick %>&tr_board_id=<%=tr_board_id %>" method="post" name="form">
+            <form action="tr_board_edit_ok.jsp?tr_board_id=<%=tr_board_id %>" method="post" name="form">
               <p><span>자유게시판</span> 글수정하기</p>
               <table>
                 <tr>
@@ -64,8 +64,7 @@ request.setCharacterEncoding("UTF-8");
                 </tr>
                 <tr>
                   <td>
-                    <textarea name="tr_b_content" ><%=tr_board_content %>
-                  </textarea>
+                    <textarea name="tr_b_content" ><%=tr_board_content %></textarea>
                   </td>
                 </tr>
                 <tr>

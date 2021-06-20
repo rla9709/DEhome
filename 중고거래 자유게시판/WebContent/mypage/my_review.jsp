@@ -54,41 +54,35 @@ request.setCharacterEncoding("UTF-8");
           <p class="my_page_label">${nick }님 안녕하세요</p>
         </div>
         <div class="mypage_sidebar_box">
-          <ul>
-            <li class="mypage_side_label">회원정보</li>
-            <li class="mypage_side_list">
-              <a href="edit_account.jsp">개인정보 수정</a>
-            </li>
-            <li class="mypage_side_list">
-              <a href="delete_account.jsp">회원탈퇴</a>
-            </li>
-            <li class="mypage_side_list">
-              <a href="account_system_link.jsp">간편로그인 연동</a>
-            </li>
-            <li class="mypage_side_list"><a href="#">주제 목록4</a></li>
-          </ul>
-       <ul class="mypage_ul2">
+            <ul class="mypage_ul1">
+              <li class="mypage_side_label">회원정보</li>
+              <li class="mypage_side_list" ><a href="edit_account.jsp">개인정보 수정</a></li>
+              <li class="mypage_side_list"><a href="delete_account.jsp">회원탈퇴</a></li>
+              <li class="mypage_side_list"><a href="account_system_link.jsp">간편로그인 연동</a></li>
+              <li class="mypage_side_list"><a href="#">주제 목록4</a></li>
+            </ul>
+            <ul class="mypage_ul2">
               <li class="mypage_side_label">활동 및 문의</li>
               <li class="mypage_side_list"><a href="my_trade_list.jsp">나의 거래 ></a></li>
-              <li class="mypage_side_list_1" style="color: #1B7850"><a href="#">내가 작성한 글 ></a>
+              <li class="mypage_side_list_1" style="color: #1B7850"><a href="my_trade_board.jsp">내가 작성한 글 ></a>
               	<ul class="mypage_side_list_2">
               		<li><a href="my_trade_board.jsp">자유게시판</a></li>
               		<li><a href="my_interior_tip.jsp">인테리어 팁</a></li>
               		<li><a href="my_review.jsp">시공리뷰</a></li>
-              		<li><a href="#">QNA</a></li>
+              		<li><a href="my_qna.jsp">QNA</a></li>
               	</ul>
               </li>
               <li class="mypage_side_list"><a href="#">대화목록</a></li>
               <li class="mypage_side_list"><a href="#">북마크</a></li>
             </ul>
-          <ul>
-            <li class="mypage_side_label">사이드바 주제3</li>
-            <li class="mypage_side_list"><a href="#">주제 목록1</a></li>
-            <li class="mypage_side_list"><a href="#">주제 목록2</a></li>
-            <li class="mypage_side_list"><a href="#">주제 목록3</a></li>
-            <li class="mypage_side_list"><a href="#">주제 목록4</a></li>
-          </ul>
-      </div>
+            <ul class="mypage_ul3">
+              <li class="mypage_side_label">사이드바 주제3</li>
+              <li class="mypage_side_list"><a href="#">주제 목록1</a></li>
+              <li class="mypage_side_list"><a href="#">주제 목록2</a></li>
+              <li class="mypage_side_list"><a href="#">주제 목록3</a></li>
+              <li class="mypage_side_list"><a href="#">주제 목록4</a></li>
+            </ul>
+          </div>
       
       
 
@@ -110,7 +104,7 @@ request.setCharacterEncoding("UTF-8");
 			com_rating = dto.getCom_rating();
 			
 	%>
-			<a href="review_page.html">
+			<a href="../interior/review_show.jsp?re_no=<%= re_no %>">
 	          <div class="recon_01">
 	            <p>
 	              <span><%=re_title %></span>

@@ -56,7 +56,7 @@ request.setCharacterEncoding("UTF-8");
      <center>
     <content>
       <form id="delete" method="post" name="delete_form"
-      		action="tr_board_delete_ok.jsp?tr_user_nick=<%=tr_user_nick %>&tr_board_id=<%= tr_board_id %>&pageNum=<%=pageNum%>">
+      		action="tr_board_delete_ok.jsp?tr_board_id=<%= tr_board_id %>&pageNum=<%=pageNum%>">
         <div class="delete_head">
           <p>자유게시판</p>
           <p><%= sdf.format(tr_board_date) %></p>

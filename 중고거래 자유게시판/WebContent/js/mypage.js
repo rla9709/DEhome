@@ -1,3 +1,8 @@
+var pwdCheck = /^(?=.*[a-zA-Z])(?=.*[~!@#$%^&*()_+-=|<>?:{}])(?=.*[0-9].{8,25}$)/;
+var pattern_num = /[0-9]/;
+var pattern_eng = /[a-zA-Z]/;
+var pattern_spc = /[~!@#$%^&*()_+|<>?:{}]/;
+var pattern_kor = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
 
 function email_change(){
 	if(document.form.email.options[document.form.email.selectedIndex].value == '0'){
@@ -21,40 +26,44 @@ function email_change(){
 function edit_ok(){
 	if(document.form.user_nick.value.length == 0) {
 		alert("닉네임는 필수 입력 사항입니다.");
-		document.form.mem_nick.focus();
+		document.form.user_nick.focus();
 		return;
 	}
 	if(document.form.pre_pw.value.length == 0) {
 		alert("기존 비밀번호는 필수 입력 사항입니다.");
-		document.form.mem_pwd.focus();
-		return;
-	}
-	if(document.form.user_pw.value.length == 0) {
-		alert("새 비밀번호는 필수 입력 사항입니다.");
-		document.form.mem_pwd_new.focus();
-		return;
-	}
-	if(document.form.user_pw2.value.length == 0) {
-		alert("새 비밀번호 확인은 필수 입력 사항입니다.");
-		document.form.mem_pwd_new2.focus();
-		return;
-	}
-	if(document.form.user_pnum.value.length == 0) {
-		alert("휴대폰 번호는 필수 입력 사항입니다.");
-		document.form.user_id.focus();
-		return;
-	}
-	if(document.form.user_addr2.value.length == 0) {
-		alert("주소는 필수 입력 사항입니다.");
-		document.form.address_input1.focus();
-		return;
-	}
-	if(document.form.user_addr4.value.length == 0) {
-		alert("상세주소를 입력하세요.");
-		document.form.address_input2.focus();
+		document.form.pre_pw.focus();
 		return;
 	}
 	
+	if(document.form.user_pw.value.length == 0) {
+		alert("새 비밀번호는 필수 입력 사항입니다.");
+		document.form.user_pw.focus();
+		return;
+	}
+	
+		if(document.form.user_pw.value.length < 8) {
+			alert("비밀번호는 최소 8자리 이상 입력해주세요.");
+			document.form.user_pw.focus();
+			return;
+		} else if(!pattern_num.test(document.form.user_pw.value)) {
+			alert("비밀번호에 숫자를 사용하세요.");
+			document.form.user_pw.focus();
+			return;
+		} else if(!pattern_eng.test(document.form.user_pw.value)) {
+			alert("비밀번호에 영문자를 사용하세요.");
+			document.form.user_pw.focus();
+			return;
+		} else if(!pattern_spc.test(document.form.user_pw.value)) {
+			alert("비밀번호에 특수문자를 사용하세요.");
+			document.form.user_pw.focus();
+			return;
+		} else if(document.form.user_pw.value.length > 16) {
+			alert("비밀번호는 16자리 이하로 입력해주세요.");
+			document.form.user_pw.focus();
+			return;
+		}
+	
+
 	
 	
 	/*비밀번호 확인*/
@@ -89,13 +98,13 @@ function check_ok(){
 			alert("기타 내용을 입력하세요.")
 		}
 	}
-	
-	if(document.getElementsByName("delete")[0].isChecked == false){
+	if(document.getElementsByName("delete")[0].checked == false){
 		alert("회원 탈퇴에 동의하세요");
 	}else{
 		
-	document.delete_form.submit();
 	}
+	
+	
 }
 
 

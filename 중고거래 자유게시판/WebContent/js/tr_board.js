@@ -30,6 +30,6 @@ function delete_ok(){
 }
 
 function no() {
-		alert("로그인 후 이용하세요");
-		
-	}
+	alert("로그인 후 이용하세요");
+	
+}

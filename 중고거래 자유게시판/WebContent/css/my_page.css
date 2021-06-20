@@ -1,22 +1,21 @@
-/* 留덉씠�럹�씠吏�愿��젴 硫붿씤,怨듯넻�쟻�슜 */
+/* 마이페이지관련 메인,공통적용 */
 .page_title {
     margin-top: 40px;
     margin-bottom: 20px;
     text-align: center;
     font: normal normal 48px 'Do Hyeon', sans-serif;
     font-weight: bold;
-    /* color: #333; */
     color: #1b7850;
     letter-spacing: -1px;
 }
-/*  */
+/* 마이페이지 */
 .contents_mypage {
     width: 1250px;
     height: 700px;
     margin: 0 auto;
     padding-top: 10px;
 }
-/* 留덉씠�럹�씠吏��쐵遺�遺� */
+/* 마이페이지윗부분 */
 .mypage_header_box {
     border: 1px solid lightgray;
     width: 1199px;
@@ -26,17 +25,17 @@
     padding-left: 50px;
     float: left;
 }
-/* 留덉씠�럹�씠吏� �쐵遺�遺� �씪踰� */
+/* 마이페이지 윗부분 라벨 */
 .my_page_label {
     padding-top: 10px;
     font: normal bold 25px 'Nanum Gothic', sans-serif ;
     color: gray;
 }
-/* 留덉씠�럹�씠吏� �궗�씠�뱶諛� */
+/* 마이페이지 사이드바 */
 .mypage_sidebar_box {
     border: 1px solid lightgray;
     width: 135px;
-    height: 550px;
+    height: 690px;
     margin-top: 20px;
     margin-bottom: 20px;
     margin-right: 20px;
@@ -45,17 +44,16 @@
     float: left;
 }
 
-/* 留덉씠�럹�씠吏� �궗�씠�뱶諛� 硫붾돱 */
+/* 마이페이지 사이드바 메뉴 */
 .mypage_side_label {
     margin-bottom: 15px;
     margin-top: 25px;
     text-align: left;
     font: normal normal 21px 'Do Hyeon', sans-serif;
-    /* color: #333/; */
     color: #1b7850;
 }
 .mypage_side_list {
-    margin-bottom: 14px;
+  	margin-bottom: 14px;
     text-align: left;
     font: normal normal 15px 'Nanum Gothic', sans-serif;
     color: #555;
@@ -68,28 +66,44 @@
     margin-bottom: 15px;
     text-align: left;
     font: normal normal 27px 'Do Hyeon', sans-serif;
-    /* font-weight: bold;/ */
     color: #333;
 }
-/* 留덉씠�럹�씠吏� 肄섑뀗痢� �뀒�몢由щ�遺� */
-.mypage_main{
-    width: 1010px;
-    height: 900px;
-    margin-bottom: 30px;
-	
+.mypage_side_list_1 {
+	margin-bottom: 14px;
+    text-align: left;
+    font: normal normal 15px 'Nanum Gothic', sans-serif;
+    color: #555;
 }
+.mypage_side_list_2 {
+	display: none;
+	padding: 3px;
+	margin-left: 5px;
+	margin-top: 5px;
+}
+.mypage_side_list_2 li {
+	margin-top: 8px;
+}
+.mypage_side_list_1:hover .mypage_side_list_2 {
+	display: block;
+	color: #333;
+}
+.mypage_side_list_2 li:hover {
+	color: #1B7850;
+}
+/* 마이페이지 콘텐츠 테두리부분 */
+
 .mypage_content_box {
     /* border: 1px solid lightgray; */
     width: 1010px;
     height: 200px;
     margin-top: 20px;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
     margin-left: 10px;
     padding-top: 10px;
     padding-left: 25px;
     float: left;
 }
-/* 留덉씠�럹�씠吏� 肄섑뀗痢� */
+/* 마이페이지 콘텐츠 */
 .mypage_content_list {
     /* border: 1px solid lightgray; */
     width: 110px;
@@ -101,6 +115,43 @@
     padding-left: 25px;
     float: left;
 }
+/* 마이페이지 메인화면 콘텐츠 리스트 */
+.mypage_content_list_main {
+    border: 1px solid lightgray;
+    border-bottom: 4px solid #ffe88c;
+    width: 205px;
+    height: 140px;
+    /* margin-top: 20px; */
+    /* margin-bottom: 20px; */
+    margin-left: 10px;
+    padding-top: 10px;
+    padding-left: 25px;
+    float: left;
+}
+
+
+/* -----아래로 연진님 css추가--------- */
+
+
+.mypage_main{
+    width: 1010px;
+    height: 900px;
+    margin-bottom: 30px;
+	
+}
+
+.mypage_content_box {
+    /* border: 1px solid lightgray; */
+    width: 1010px;
+    height: 200px;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    margin-left: 10px;
+    padding-top: 10px;
+    padding-left: 25px;
+    float: left;
+}
+
 /* 留덉씠�럹�씠吏� 硫붿씤�솕硫� 肄섑뀗痢� 由ъ뒪�듃 */
 .mypage_content_list_main {
     width: 220px;
@@ -482,4 +533,7 @@
 
 
 /*마이페이지 메인*/
+
+
+
 

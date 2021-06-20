@@ -1,3 +1,4 @@
+<%@page import="myUtil.HanConv"%>
 <%@page import="mypage.MypageDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -18,6 +19,10 @@
 	System.out.println("원래 비번 : "+real_pw);
 	System.out.println("입력한 기존 비번 : "+ pre_pw);
 	System.out.println("새 비번 : "+ dto.getUser_pw());
+	System.out.println("닉넴 : "+ HanConv.toKor(request.getParameter("user_nick")));
+	
+	dto.setUser_nick(HanConv.toKor(request.getParameter("user_nick")));
+	
 %>
 <%
 	
@@ -32,7 +37,11 @@
 		MypageDAO dao = MypageDAO.getInstance();	
 		int re = dao.editAccount(dto);
 		if(re == 1){
-	
+	%>
+			<script>
+				alert("회원정보가 변경되었습니다.");
+			</script>		
+	<%
 			response.sendRedirect("mypage.jsp");
 		}else{
 	

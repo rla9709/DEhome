@@ -56,8 +56,7 @@ request.setCharacterEncoding("UTF-8");
                 </tr>
                 <tr>
                   <td>
-                    <textarea name="tr_b_content" placeholder="내용을 작성헤주세요">
-                  </textarea>
+                    <textarea name="tr_b_content" placeholder="내용을 작성헤주세요"></textarea>
                   </td>
                 </tr>
                 <tr>

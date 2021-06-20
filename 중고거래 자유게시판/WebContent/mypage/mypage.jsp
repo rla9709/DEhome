@@ -54,7 +54,7 @@
               		<li><a href="my_trade_board.jsp">자유게시판</a></li>
               		<li><a href="my_interior_tip.jsp">인테리어 팁</a></li>
               		<li><a href="my_review.jsp">시공리뷰</a></li>
-              		<li><a href="#">QNA</a></li>
+              		<li><a href="my_qna.jsp">QNA</a></li>
               	</ul>
               </li>
               <li class="mypage_side_list"><a href="#">대화목록</a></li>
@@ -100,7 +100,7 @@
 <%
 		if(tr_complete == 0){
 %>          
-          <div class="mypage_content_list_main" onclick="location.href='../trade/tradeShow.jsp?tr_user_nick=${writer}&tr_no=${num}'">
+          <div class="mypage_content_list_main" onclick="location.href='../trade/tradeShow.jsp?tr_user_nick=${nick}&tr_no=${num}'">
           		<div>
 				<img class="my_sell_image" src="${photo}"/>
           		</div>
@@ -183,7 +183,7 @@
 			pageContext.setAttribute("interest", interest);
 %>
           
-          <div class="mypage_content_list_main" onclick="location.href='../trade/tradeShow.jsp?tr_user_nick=${writer}&tr_no=${num}'">
+          <div class="mypage_content_list_main" onclick="location.href='../trade/tradeShow.jsp?tr_user_nick=${nick}&tr_no=${num}'">
           		<div>
 				<img class="my_sell_image" src="${photo}"/>
           		</div>
