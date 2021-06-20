@@ -47,7 +47,7 @@ request.setCharacterEncoding("UTF-8");
  <div class="contents_mypage">
         <a href="mypage.html"></a><h2 class="page_title">MY PAGE</h2></a>
         <div class="mypage_header_box">
-          <p class="my_page_label">${id }님 안녕하세요</p>
+          <p class="my_page_label">${nick }님 안녕하세요</p>
         </div>
         <div class="mypage_sidebar_box">
           <ul>
