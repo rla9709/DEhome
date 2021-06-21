@@ -116,7 +116,7 @@
             <div class="edit_account_box">
               <p class="mypage_content_edit_list">닉네임</p>
               <p class="mypage_content_list_list">
-                <input type="text" name="user_nick" placeholder="회원ID" value="<%= user_nick%>" />
+                <input type="text" name="user_nick" placeholder="회원 닉네임" value="<%= user_nick%>" />
               </p>
             </div>
             <div class="edit_account_box">
@@ -161,7 +161,7 @@
               </p>
              
             </div>
-            <div class="edit_account_box" style="height: 120px">
+            <div class="edit_account_box" style="height: 180px">
               <p class="mypage_content_edit_list">주소</p>
               <div class="mypage_content_list_list">
                 <div>
@@ -181,6 +181,15 @@
                       id="address"
                        value="<%=user_addr2%>"
                     /><br /><br />
+                  </div>
+                  <div>
+                    <input
+                      type="text"
+                      name="user_addr3"
+                      placeholder="(참고항목)"
+                      id="detailAddress"
+                       value="<%=user_addr3%>"
+                    />
                   </div>
                   <div>
                     <input

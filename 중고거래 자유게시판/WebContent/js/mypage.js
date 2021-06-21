@@ -82,6 +82,7 @@ function edit_ok(){
 
 function check_ok(){
 	ckType = document.getElementsByName("delete_reason")
+	ckBox = document.getElementsByName("delete")
 	
 	for (i=0;i<ckType.length ;i++){
 		 if (ckType[i].checked == true){
@@ -90,19 +91,21 @@ function check_ok(){
 		 }
 		if (i == ckType.length-1){
 		 alert("회원탈퇴 사유를 선택하세요");
+		 return;
 		}
 	}
 	
 	if(ckType[5].checked == true){
 		if(document.delete_form.etc_text.value == ""){
 			alert("기타 내용을 입력하세요.")
+			return;
 		}
 	}
 	if(document.getElementsByName("delete")[0].checked == false){
 		alert("회원 탈퇴에 동의하세요");
-	}else{
-		
+			return;
 	}
+	document.delete_form.submit();
 	
 	
 }

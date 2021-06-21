@@ -19,6 +19,7 @@
     padding-left: 25px;
     /* float: left; */
 }
+
 .mypage_content_list {
     /* border: 1px solid lightgray; */
     width: 130px;
@@ -64,53 +65,64 @@
 
 
 /* 개인정보 수정 입력 칸 */
-.mypage_content_list_list input[name='mem_name'] {
+.mypage_content_list_list input[name='user_name'] {
     width: 200px;
     height: 25px;
 }
-.mypage_content_list_list input[name='mem_id'] {
+.mypage_content_list_list input[name='user_id'] {
     width: 200px;
     height: 25px;
 }
-.mypage_content_list_list input[name='mem_pwd'] {
+.mypage_content_list_list input[name='user_nick'] {
     width: 200px;
     height: 25px;
 }
-.mypage_content_list_list input[name='address_input'] {
+.mypage_content_list_list input[name='pre_pw'] {
+    width: 200px;
+    height: 25px;
+}
+.mypage_content_list_list input[name='user_pw'] {
+    width: 200px;
+    height: 25px;
+}
+.mypage_content_list_list input[name='user_pw2'] {
+    width: 200px;
+    height: 25px;
+}
+.mypage_content_list_list input[name='user_addr1'] {
     width: 100px;
     height: 25px;
 }
-.mypage_content_list_list input[name='address_input1'] {
+.mypage_content_list_list input[name='user_addr2'] {
     width: 300px;
     height: 25px;
     margin-left: 175px;
 }
-.mypage_content_list_list input[name='address_input2'] {
+.mypage_content_list_list input[name='user_addr3'] {
     width: 300px;
     height: 25px;
     margin-left: 175px;
 }
-.mypage_content_list_list input[name='phone_num1'] {
+.mypage_content_list_list input[name='user_addr4'] {
+    width: 300px;
+    height: 25px;
+    margin-left: 175px;
+    margin-top: 20px;
+}
+.mypage_content_list_list input[name='user_pnum'] {
     width: 100px;
     height: 25px;
 }
-.mypage_content_list_list input[name='phone_num2'] {
-    width: 100px;
-    height: 25px;
-}
-.mypage_content_list_list input[name='phone_num3'] {
-    width: 100px;
-    height: 25px;
-}
+
 .mypage_content_list_list select {
     width: 100px;
     height: 25px;
 }
-.mypage_content_list_list input[name='email'] {
+.mypage_content_list_list input[name='user_email'] {
     width: 150px;
     height: 25px;
 }
-.mypage_content_list_list input[name='email_domain'] {
+.mypage_content_list_list input[name='user_email2'] {
     width: 150px;
     height: 25px;
 }

@@ -47,6 +47,9 @@ public class MypageDAO {
 				dto.setUser_nick(rs.getString(1));
 				dto.setUser_id(rs.getString(2));
 				dto.setUser_pw(rs.getString(3));
+				
+				System.out.println(rs.getString(3));
+				
 				dto.setUser_name(rs.getString(4));
 				dto.setUser_pnum(rs.getInt(5));
 				dto.setUser_email(rs.getString(6));
@@ -77,7 +80,7 @@ public class MypageDAO {
 		try {
 			con = getConnection();
 			sql = "update user "
-					+ "set USER_NICK=?, USER_PW=?, USER_PNUM=?, USER_EMAIL=?,USER_EMAIL2=?, USER_ADDR=?,USER_ADDR2=?,USER_ADDR4=? "
+					+ "set user_nick = ?,USER_PW=?, USER_PNUM=?, USER_EMAIL=?,USER_EMAIL2=?, USER_ADDR=?,USER_ADDR2=?,USER_ADDR4=? "
 					+ "where USER_NICK = ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, dto.getUser_nick());
@@ -124,7 +127,7 @@ public class MypageDAO {
 
 		try {
 			con = getConnection();
-			sql = "delete from user where user_id=?";
+			sql = "delete from user where user_nick=?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, user_nick);
 			pstmt.executeUpdate();

@@ -22,7 +22,7 @@
 			alert("È¸¿ø Å»ÅðµÇ¾ú½À´Ï´Ù");
 		</script>
 	<%
-			response.sendRedirect("mypage.jsp");
+			response.sendRedirect("../login/logout.jsp");
 		}else if(re == -1){
 	%>
 		<script language="JavaScript">
