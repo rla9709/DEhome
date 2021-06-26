@@ -150,12 +150,27 @@ if(cookies != null){
             </tr>
             <tr>
               <td class="">
-		         <input type="button" value="목록으로"
+		         <c:choose>
+		
+					<c:when test = "${nickname eq null}">
+						    <input type="button" value="목록으로"
+			                		onclick="location.href='tr_board_list.jsp?board_pagenum=${show.board_pagenum }'" >
+					</c:when>
+					
+					<c:when test = "${nickname eq show.user_nick}">
+			                <input type="button" value="목록으로"
 			                		onclick="location.href='tr_board_list?board_pagenum=${show.board_pagenum }'" >
 			                <input type="button" value="수정하기" 
 			                		onclick="location.href='tr_board_edit?board_id=${show.board_id }&board_pagenum=${show.board_pagenum }'">
 			                <input type="button" value="삭제하기"
 			                		onclick="location.href='tr_board_delete?board_id=${show.board_id }&board_pagenum=${show.board_pagenum }'">
+					</c:when>
+					
+					<c:otherwise>
+						    <input type="button" value="목록으로"
+			                		onclick="location.href='tr_board_list?board_pagenum=${show.board_pagenum }'" >
+					</c:otherwise>
+				</c:choose>
               </td>
             </tr>
           </table>

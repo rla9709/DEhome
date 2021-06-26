@@ -99,13 +99,18 @@ request.setCharacterEncoding("UTF-8");
         </div>
     </center>
   <div>
+  <%-- 페이지 번호 미완성--%>
    <center id="pagenum">
 	    <c:forEach begin="${start}" end="${end}" step="1" var="i">
 	        <a href="/searchBoard?limit=${limit}&pageNum=${i}">${i}</a>
 	    </c:forEach>
 	</center>
+	
 <%-- 
 <content>
+
+
+
     <center>
         <div id="trade_board">
             <div id="board_title">
