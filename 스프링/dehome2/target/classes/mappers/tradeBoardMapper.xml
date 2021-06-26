@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.tradeBoardMapper">
+
+<!-- 자유게시판 글쓰기 -->
+<insert id="writeTradeBoard" parameterType="TradeBoardDTO">
+	insert into trade_board( board_id, user_nick, board_title, board_content, board_date, board_count, board_pw) 
+					values(#{board_id}
+							, #{user_nick} 
+							, #{board_title}
+							, #{board_content}
+							, now()
+							, 0
+							, #{board_pw})
+
+</insert>
+
+
+<!-- 자유게시판 글목록 -->
+<select id="tradeBoardList" resultType="TradeBoardDTO">
+	select BOARD_ID, USER_NICK, BOARD_TITLE, BOARD_CONTENT, BOARD_DATE, BOARD_COUNT, BOARD_PW, BOARD_PAGENUM 
+	from trade_board order by board_id desc
+</select>
+
+<!-- 자유게시판 글 가져오기-->
+<select id="showTradeBoard"  parameterType="int" resultType="TradeBoardDTO">
+	select BOARD_ID, USER_NICK, BOARD_TITLE, BOARD_CONTENT, BOARD_DATE, BOARD_COUNT, BOARD_PW, BOARD_PAGENUM from trade_board where board_id = #{board_id}
+</select>
+
+<!-- 자유게시판 글 가져오기 : 조회수 증가 -->
+<select id="updateHit" parameterType="int" resultType="TradeBoardDTO">
+	update trade_board set board_count = board_count +1 where board_id = #{board_id}
+</select>
+
+<!-- 자유게시판 글수정 -->
+<update id="editTradeBoard" parameterType="TradeBoardDTO">
+	update trade_board 
+		set board_title = #{board_title},
+			board_content = #{board_content},
+			board_date = now()
+		where board_id = #{board_id}
+</update>
+
+
+<!-- 게시물 삭제  -->
+<delete id="deleteTradeBoard" parameterType="int">
+	delete 
+		from trade_board
+	where board_id = #{board_id} 
+</delete>
+
+<!-- 게시물 조회수 -->
+<update id="hitUp">
+	update trade_board 
+		set board_count = board_count +1 
+		where board_id = #{board_id}
+</update>
+
+
+
+
+
+<!-- 게시물 총 갯수 -->
+<select id="count" resultType="int">
+	select count(board_id) from trade_board
+</select>
+
+<!-- 게시물 목록 + 페이징 -->
+<select id="listPage" parameterType="hashMap" resultType="TradeBoardDTO">
+ select
+	board_id, USER_NICK, board_title, BOARD_CONTENT, BOARD_DATE
+ from trade_board
+ order by board_id desc
+ limit #{displayPost}, #{postNum}
+</select>
+
+
+
+<select id="pageCount"
+        parameterType="map"
+        resultType="int">
+	SELECT
+		count(*) as cnt
+	FROM trade_board
+</select>
+
+<select id="searchBoard"
+        parameterType="map"
+        resultType="TradeBoardDTO">
+	SELECT
+		board_id, USER_NICK, board_title, BOARD_CONTENT, BOARD_DATE
+	FROM trade_board
+	LIMIT #{offset}, #{limit}
+</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
