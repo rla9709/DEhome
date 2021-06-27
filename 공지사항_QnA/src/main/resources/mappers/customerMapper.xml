@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.customerMapper">
+
+<!-- 	qna:작성,수정,삭제,조회(list, show) 
+	 	qna_c:작성,수정,삭제,조회(list, show)-관리자만
+  		notice:작성,수정,삭제,조회(list,show)-관리자만 -->
+	
+	<!-- QnA작성 -->
+	<insert id="insert">
+		insert into qna values((select nvl(max(qna_no)+1, 1)from qna)
+						, #{user_nick}
+						, #{qna_title}
+						, #{qna_content}
+						, now()
+						, #{qna_count}
+						, #{qna_type}
+						, #{qna_pw}
+						, #{qna_process})
+	</insert>
+	
+	<select id="listAll" parameterType="CustomerDTO" resultType="CustomerDTO">
+		select qna_no, user_nick
+					 , qna_title
+					 , qna_content
+					 , qna_date
+					 , qna_count
+ 					 , qna_type
+ 					 , qna_pw
+ 					 , qna_process  from qna order by qna_no desc, qna_date desc
+	</select>
+	
+	<!-- QnA조회 -->
+	<select id="view">
+		select * from user where qna_no = #{qna_no}
+	</select>
+	
+	<!-- 조회수증가 -->
+	<update id="increaseViewcnt">
+		update qna set qna_count = qna_count+1
+							  where qna_no = #{qna_no}
+	</update>
+	
+	<!-- QnA수정	 -->
+	<update id="updateArticle">
+		update qna set qna_title=#{qna_title}
+							 , qna_content=#{qna_content}
+							 , qna_type=#{qna_type} where qna_no = #{qna_no}
+	</update>
+	
+	<delete id="deleteArticle">
+		delete from qna where qna_no = #{qna_no}
+	</delete>	
+</mapper>
