@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.mypageMapper">
+
+<!-- 회원정보 수정 -->
+<select id="getUser" parameterType="String" resultType="MypageDTO">
+	select * from user
+		 where user_nick = #{user_nick}
+</select>
+
+<insert id="editUser" parameterType="MypageDTO" >
+	update user 
+		set user_nick = #{user_nick}
+			, user_pw = #{user_pw}
+			, user_pnum = #{user_pnum}
+			, user_email = #{user_email}
+			, user_email2 = #{user_email2}
+			, user_addr = #{user_addr}
+			, user_addr2 = #{user_addr2}
+			, user_addr3 = #{user_addr3}
+			, user_addr4 = #{user_addr4}
+		where user_nick = #{user_nick}
+</insert>
+
+<select id="getPw" parameterType="string" resultType="string">
+	select user_pw 
+		from user 
+	where user_nick = #{user_nick}
+</select>
+
+
+<!-- 회원탈퇴 -->
+<update id="deleteUser" parameterType="String">
+	delete from user where user_nick = #{user_nick}
+</update>
+
+
+<!-- 내가 작성한 리뷰 -->
+<select id="myReview" parameterType="string" resultType="InteriorReviewDTO">
+	select RE_NO, COM_NAME, USER_NICK, RE_TITLE, RE_CONTENT 
+		from review
+	 where USER_NICK = #{user_nick}
+	 order by re_no desc;
+</select>		
+
+<select id="myReviewCompany" parameterType="String" resultType="float">
+	select com_rating 
+		from company 
+	where com_name = #{com_name}
+</select>
+
+
+
+<!--자유게시판 내가 쓴 글 -->
+<select id="myTradeBoardList" parameterType="Map" resultType="TradeBoardDTO">
+	select BOARD_ID, USER_NICK, BOARD_TITLE, BOARD_CONTENT, BOARD_DATE, BOARD_COUNT, BOARD_PW, BOARD_PAGENUM  
+		from trade_board 
+	  where user_nick = #{user_nick}
+	  order by board_id desc
+	  LIMIT #{startIndex}, 10
+</select>		
+
+<!-- 자유게시판 내가 쓴 글 총 갯수 -->
+<select id="myBoardCount" resultType="int">
+	select count(board_id) 
+		from trade_board
+		where user_nick = #{user_nick}
+</select>
+
+<!-- 진행중인 거래  -->
+<select id="myTradeList" parameterType="string" resultType="MyTradeDTO">
+select ut.trade_no,
+		ut.TRADE_TITLE "trade_title",
+		format(ut.TRADE_PRICE,0) "trade_price", 
+		ut.TRADE_PHOTO "trade_photo",
+		ut.trade_complete "trade_complete", 
+        ut.user_nick "user_nick"
+      from usedtrade ut , trade_chat tc
+ where ut.TRADE_NO in (select trade_no from trade_chat where user_nick = #{user_nick})
+	and ut.trade_no = tc.TRADE_NO and ut.TRADE_COMPLETE = 0;
+</select>
+
+<!-- 나의 판매상품 -->
+<select id="mySellList" parameterType="string" resultType="MyTradeDTO">
+	select trade_no,
+			TRADE_TITLE,
+			format(TRADE_PRICE,0) "TRADE_PRICE", 
+			TRADE_PHOTO,
+			trade_complete	
+		from usedtrade 
+	where user_nick = #{user_nick}
+		  order by trade_no desc
+</select>
+
+<!-- 나의 판매상품 좋아요 수 -->
+<select id="sumInterest" parameterType="int" resultType="int">
+	select  ifnull(sum(trade_interest), 0) sumInterest
+		 from tr_interest 
+	where trade_no = #{trade_no}
+</select>
+
+<!-- 나의 구매상품 -->
+<select id="myBuyList" parameterType="string" resultType="MyTradeDTO">
+	select ut.trade_no,
+			ut.TRADE_TITLE "trade_title",
+			format(ut.TRADE_PRICE,0) "trade_price", 
+			ut.TRADE_PHOTO "trade_photo",
+			ut.trade_complete "trade_complete", 
+       		ut.user_nick "user_nick"
+		from usedtrade ut ,trade_chat tc
+	where ut.TRADE_NO in (select trade_no from trade_chat where user_nick = #{user_nick})
+		and ut.USER_NICK != tc.USER_NICK and ut.trade_no = tc.TRADE_NO and ut.TRADE_COMPLETE = 0 order by trade_no desc;
+</select>
+</mapper>
