@@ -22,17 +22,16 @@
       <center>
       <content>
         <div id="write">
-            <form action="qna_insert" method="post" name="form">
-            <input type="hidden" name="qna_process" value="processing">  
-              <p><span>QnA</span> 글쓰기</p>
+            <form action="not_insert" method="post" name="form">
+              <p><span>Notice</span> 공지사항쓰기</p>
               <table>
                 <tr>
                   <td>
-                    <input class="board_title" name="qna_title" type="text" placeholder="제목을 작성해주세요" />
+                    <input class="board_title" name="not_title" type="text" placeholder="제목을 작성해주세요" />
                   </td>
                   <tr>
 	                <td>
-	                	<select name="qna_type" class="qna_type">
+	                	<select name="not_menu" class="qna_type">
 			              <option value="usedtrade" selected>중고거래</option>
 			              <option value="interrior">인테리어</option>
 			              <option value="membership">회원관련</option>
@@ -41,20 +40,18 @@
                 </tr>  
                 <tr>
                   <td>
-                    <textarea name="qna_content" placeholder="내용을 작성헤주세요">
+                    <textarea name="not_content" placeholder="내용을 작성헤주세요">
                   </textarea>
                   </td>
                 </tr>
                 <tr>
                   <td>
-                      <label for="tr_b_pw">암호 :   </label>
-                      <input type="password" name="qna_pw">
                   </td>
                 </tr>
                 <tr>
                   <td>
 <!--                     <input type="submit" value="작성하기"> -->
-                    <input type="button" value="작성하기" onclick="qna_write_ok()">
+                    <input type="button" value="작성하기" onclick="not_write_ok()">
                     <input type="reset" value="다시작성">
                   </td>
                 </tr>

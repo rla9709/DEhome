@@ -14,7 +14,7 @@
 	<link rel="stylesheet" href="${path }/resources/css/sign_up.css" />
 	<link rel="stylesheet" href="${path }/resources/css/reset.css" />
 	<link rel="stylesheet" href="${path }/resources/css/qna_board.css" />
-	<script type="text/javascript" src="${path }/resources/js/customer.js" charset="utf-8"></script>
+	<script type="text/javascript" src="${path }/resources/js/qna_board.js" charset="utf-8"></script>
 </head>
 <body>
 	<jsp:include page="../headerfooter/header.jsp"/>

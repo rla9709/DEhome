@@ -2,53 +2,124 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mappers.customerMapper">
 
-<!-- 	qna:작성,수정,삭제,조회(list, show) 
-	 	qna_c:작성,수정,삭제,조회(list, show)-관리자만
-  		notice:작성,수정,삭제,조회(list,show)-관리자만 -->
-	
-	<!-- QnA작성 -->
-	<insert id="insert">
-		insert into qna values((select nvl(max(qna_no)+1, 1)from qna)
-						, #{user_nick}
-						, #{qna_title}
-						, #{qna_content}
-						, now()
-						, #{qna_count}
-						, #{qna_type}
-						, #{qna_pw}
-						, #{qna_process})
-	</insert>
-	
-	<select id="listAll" parameterType="CustomerDTO" resultType="CustomerDTO">
-		select qna_no, user_nick
-					 , qna_title
-					 , qna_content
-					 , qna_date
-					 , qna_count
- 					 , qna_type
- 					 , qna_pw
- 					 , qna_process  from qna order by qna_no desc, qna_date desc
+	<!-- qna:작성,수정,삭제,조회(list, show) 
+		 qna_c:작성,수정,삭제,조회(list, show)-관리자만 
+		 notice:작성,수정,삭제,조회(list,show)-관리자만
+  	-->
+
+	<!-- QnA목록보기 -->
+	<select id="qna_list" parameterType="CustomerDTO"
+		resultType="CustomerDTO">
+		select qna_no
+		, user_nick
+		, qna_title
+		, qna_content
+		, qna_date
+		, qna_count
+		, qna_type
+		, qna_pw
+		, qna_process from qna order by qna_no
+		desc, qna_date desc
 	</select>
 	
 	<!-- QnA조회 -->
-	<select id="view">
-		select * from user where qna_no = #{qna_no}
+	<select id="qna_show" parameterType="CustomerDTO"
+		resultType="CustomerDTO">
+		select qna_title
+		, qna_content
+		, qna_date
+		, qna_count from qna where qna_no = #{qna_no}
 	</select>
 	
-	<!-- 조회수증가 -->
-	<update id="increaseViewcnt">
-		update qna set qna_count = qna_count+1
-							  where qna_no = #{qna_no}
+	<!-- QnA작성 -->
+	<insert id="qna_insert">
+		insert into qna values(
+		 1
+		, 'aaa'
+<!-- 		, #{user_nick} -->
+		, #{qna_title}
+		, #{qna_content}
+		, now()
+		, 0
+		, #{qna_type}
+		, #{qna_pw}
+		, #{qna_process})
+	</insert>
+
+	<!-- QnA수정 -->
+	<update id="qna_modify" parameterType="CustomerDTO">
+		update qna set
+		qna_title=#{qna_title}
+		, qna_content=#{qna_content}
+		,
+		qna_type=#{qna_type} where qna_no = #{qna_no}
+	</update>
+
+	<!-- QnA삭제 -->
+	<delete id="qna_delete" parameterType="CustomerDTO">
+		delete from qna where qna_no =
+		#{qna_no}
+	</delete>
+	
+	<!-- QnA조회수증가 -->
+	<update id="qna_increaseViewcnt" parameterType="CustomerDTO">
+		update qna set
+		qna_count = qna_count+1
+		where qna_no = #{qna_no}
 	</update>
 	
-	<!-- QnA수정	 -->
-	<update id="updateArticle">
-		update qna set qna_title=#{qna_title}
-							 , qna_content=#{qna_content}
-							 , qna_type=#{qna_type} where qna_no = #{qna_no}
-	</update>
+	<!-- Notice목록보기 -->
+	<select id="not_list" parameterType="CustomerDTO"
+		resultType="CustomerDTO">
+		select not_no
+		, user_nick
+		, not_title
+		, not_content
+		, not_date
+		, not_count
+		, not_menu 
+		from notice order by not_no desc,
+							 not_date desc
+	</select>
 	
-	<delete id="deleteArticle">
-		delete from qna where qna_no = #{qna_no}
-	</delete>	
+	<!-- Notice조회 -->
+	<select id="not_show" parameterType="CustomerDTO"
+		resultType="CustomerDTO">
+		select * from notice where not_no = #{not_no}
+	</select>
+	
+	<!-- Notice작성 -->
+	<insert id="not_insert">
+		insert into notice values(
+		 1
+		, 'aaa'
+<!-- 		, #{user_nick} -->
+		, #{not_title}
+		, #{not_content}
+		, now()
+		, 0
+		, #{not_menu})
+	</insert>
+
+	<!-- Notice수정 -->
+	<update id="not_modify" parameterType="CustomerDTO">
+		update notice set
+		  not_title=#{not_title}
+		, not_content=#{not_content}
+		, not_menu=#{not_menu} 
+		where not_no = #{not_no}
+	</update>
+
+	<!-- Notice삭제 -->
+	<delete id="not_delete" parameterType="CustomerDTO">
+		delete from notice where not_no =
+		#{not_no}
+	</delete>
+	
+	<!-- Notice조회수증가 -->
+	<update id="not_increaseViewcnt" parameterType="CustomerDTO">
+		update notice set
+		not_count = not_count+1
+		where not_no = #{not_no}
+	</update>
 </mapper>

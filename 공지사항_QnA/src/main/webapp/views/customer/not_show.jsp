@@ -14,53 +14,45 @@
 	<link rel="stylesheet" href="${path }/resources/css/sign_up.css" />
 	<link rel="stylesheet" href="${path }/resources/css/reset.css" />
 	<link rel="stylesheet" href="${path }/resources/css/qna_board.css" />
-	<script type="text/javascript" src="${path }/resources/js/customer.js" charset="utf-8"></script>
 </head>
 <body>
 	<jsp:include page="../headerfooter/header.jsp"/>
     <!-- --------------------- 컨텐츠 시작 ---------------------- -->
      <center>
     <content>
-      <form id="delete" method="post" name="delete_form"
-      		action="qna_delete">
-        <div class="delete_head">
-          <p>QnA</p>
-          <p>${qna_date}</p>
+      <div id="show">
+        <div class="show_head">
+          <p>Notice</p>
         </div>
         <div>
           <table>
             <tr>
               <td>
-                <p>${qna_title}</p>
-                <p>조회수  <span>${qna_count}</span></p>
-                <p>${qna_user_nick }</p>
+                <p>${not_title}</p>
+                <p>조회수  <span>${not_count}</span></p>
+                <p>${not_date}</p>
               </td>
             </tr>
             <tr>
               <td>
-                ${qna_content}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                  <label for="qna_pw">암호 :   </label>
-                  <input type="password" name="qna_pw">
+                ${not_content}
               </td>
             </tr>
             <tr>
               <td class="">
                 <input type="button" value="목록으로"
-                		onclick="location.href='qna_list" >
+                		onclick="location.href='not_list'" >
+                <input type="button" value="수정하기" 
+                		onclick="location.href='not_modify'">
                 <input type="button" value="삭제하기"
-                		onclick="delete_ok()">
+                		onclick="location.href='not_delete'">
               </td>
             </tr>
           </table>
         </div>
-      </form>
+      </div>
     </content>
   </center>
 <%@include file="../headerfooter/footer.jsp" %>
-
 </body>
 </html>

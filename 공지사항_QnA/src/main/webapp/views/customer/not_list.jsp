@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -22,47 +21,42 @@
     <center> 	
         <div id="qna_board">
             <div id="board_title">
-                QnA
-                <input type="button" value="글쓰기" onclick="location.href='qna_write'">
+                Notice
+                <input type="button" value="글쓰기" onclick="location.href='not_write'">
             </div>
 
             <table id="table" width="800" cellspacing="0" >
                 <tr class="table_top">
                     <td width="40" align="center" >번호</td>
-                    <td width="120" align="center" >QnA종류</td>
+                    <td width="120" align="center" >공지사항종류</td>
                     <td width="450" align="center" >제목</td>
-                    <td width="60" align="center" >유저닉</td>
+                    <td width="60" align="center" >관리자명</td>
                     <td width="170" align="center" >날짜</td>
                     <td width="60" align="center" >조회수</td>
-                    <td width="120" align="center" >처리상태</td>
                 </tr>
-                <c:forEach var="row" items="${qna_list}">
+                <c:forEach var="row" items="${not_list}">
                 	<tr bgcolor="#f7f7f7" 
                 		onmouseover="this.style.backgroundColor='#eeeeef'" 
 						onmouseout="this.style.backgroundColor='#f7f7f7'">
 						<td>
-							${row.qna_no}
+							${row.not_no}
 						</td>
 						<td>
-							${row.qna_type }
+							${row.not_menu }
 						</td>
 						<td>
-							<a href="../dehome/qna_show?qna_no=${row.qna_no}">
-								${row.qna_title}
+							<a href="../customer/not_show?not_no=${row.not_no}">
+								${row.not_title}
 							</a>
 						</td>
 						<td>
 							${row.user_nick }
 						</td>
 						<td align="center">
-							<fmt:formatDate value="${row.qna_date}" pattern="yyyy-MM-dd"/>
+							${row.not_date}
 						</td>
                 		<td>
-                			${row.qna_count}
-                		</td>
-                		<td>
-                			
-                			${row.qna_process }
+                			${row.not_count}
                 		</td>
                 	</tr>
                 </c:forEach>

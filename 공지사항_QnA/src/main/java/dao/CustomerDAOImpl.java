@@ -12,41 +12,81 @@ import com.green.dehome.dto.CustomerDTO;
 @Repository
 public class CustomerDAOImpl implements CustomerDAO{
 	@Inject
-	SqlSession SqlSession;
-	@Override
-	public void create(CustomerDTO customerDTO) throws Exception {
+	SqlSession sqlSession;
+	
+	//QnA
+	@Override // 목록보기
+	public List<CustomerDTO> qna_list(CustomerDTO dto) throws Exception {
 		// TODO Auto-generated method stub
-		SqlSession.insert("customer.qna_insert", customerDTO);
+		return sqlSession.selectList("mappers.customerMapper.qna_list",dto);
+	}
+	
+	@Override //상세내용보기
+	public CustomerDTO qna_show(int qna_no) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("mappers.customerMapper.qna_show", qna_no);
+	}
+	
+	@Override // 게시글작성
+	public void qna_insert(CustomerDTO customerDTO) throws Exception {
+		// TODO Auto-generated method stub
+		sqlSession.insert("mappers.customerMapper.qna_insert", customerDTO);
 	}
 
-	@Override
-	public CustomerDTO read(int qna_no) throws Exception {
+	@Override //수정
+	public void qna_modify(CustomerDTO customerDTO) throws Exception {
 		// TODO Auto-generated method stub
-		return SqlSession.selectOne("customer.qna_show", qna_no);
+		sqlSession.update("mappers.customerMapper.qna_modify", customerDTO);
 	}
 
-	@Override
-	public void update(CustomerDTO customerDTO) throws Exception {
+	@Override //삭제
+	public void qna_delete(int qna_no) throws Exception {
 		// TODO Auto-generated method stub
-		SqlSession.update("customer.update", customerDTO);
+		sqlSession.delete("mappers.customerMapper.qna_delete", qna_no);
 	}
 
-	@Override
-	public void delete(int qna_no) throws Exception {
+	@Override //조회수증가
+	public void qna_increaseViewcnt(int qna_no) throws Exception {
 		// TODO Auto-generated method stub
-		SqlSession.insert("customer.qna_insert", qna_no);
+		sqlSession.update("mappers.customerMapper.qna_increaseViewcnt", qna_no);
 	}
-
-	@Override
-	public List<CustomerDTO> listAll() throws Exception {
+	
+	
+	//notice
+	@Override // 목록보기
+	public List<CustomerDTO> not_list(CustomerDTO dto) throws Exception {
 		// TODO Auto-generated method stub
-		return SqlSession.insert("customer.qna_list");;
+		return sqlSession.selectList("mappers.customerMapper.not_list",dto);
 	}
-
-	@Override
-	public void increaseViewcnt(int qna_no) throws Exception {
+	
+	@Override //상세내용보기
+	public CustomerDTO not_show(int qna_no) throws Exception {
 		// TODO Auto-generated method stub
-		SqlSession.insert("customer.increaseViewcnt", qna_no);
+		return sqlSession.selectOne("mappers.customerMapper.not_show", qna_no);
+	}
+	
+	@Override // 게시글작성
+	public void not_insert(CustomerDTO customerDTO) throws Exception {
+		// TODO Auto-generated method stub
+		sqlSession.insert("mappers.customerMapper.not_insert", customerDTO);
+	}
+	
+	@Override //수정
+	public void not_modify(CustomerDTO customerDTO) throws Exception {
+		// TODO Auto-generated method stub
+		sqlSession.update("mappers.customerMapper.not_modify", customerDTO);
+	}
+	
+	@Override //삭제
+	public void not_delete(int qna_no) throws Exception {
+		// TODO Auto-generated method stub
+		sqlSession.delete("mappers.customerMapper.not_delete", qna_no);
+	}
+	
+	@Override //조회수증가
+	public void not_increaseViewcnt(int qna_no) throws Exception {
+		// TODO Auto-generated method stub
+		sqlSession.update("mappers.customerMapper.not_increaseViewcnt", qna_no);
 	}
 
 }

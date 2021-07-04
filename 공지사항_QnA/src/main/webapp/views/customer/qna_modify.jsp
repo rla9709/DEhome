@@ -1,47 +1,30 @@
-<%@page import="java.util.ArrayList"%>
-<%@page import="customer.QnaBoardDTO"%>
-<%@page import="customer.QnaBoardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
-	String pageNum = request.getParameter("pageNum");
-	int qna_id = 0;
-	
-	if(request.getParameter("qna_id") != null){
-		qna_id = Integer.parseInt(request.getParameter("qna_id"));
-	}else{
-		qna_id = 1;
-	}
-%>
-    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="../js/qna.js" charset="utf-8"></script>
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Nanum+Gothic&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="../css/header_footer.css" />
-    <link rel="stylesheet" href="../css/my_page.css" />
-    <link rel="stylesheet" href="../css/login.css" />
-    <link rel="stylesheet" href="../css/reset.css" />
-    <link rel="stylesheet" href="../css/qna_board.css" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" />
+	<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Nanum+Gothic&display=swap" rel="stylesheet"/>
+	<link rel="stylesheet" href="${path }/resources/css/header_footer.css" />
+	<link rel="stylesheet" href="${path }/resources/css/my_page.css" />
+	<link rel="stylesheet" href="${path }/resources/css/sign_up.css" />
+	<link rel="stylesheet" href="${path }/resources/css/reset.css" />
+	<link rel="stylesheet" href="${path }/resources/css/qna_board.css" />
+	<script type="text/javascript" src="${path }/resources/js/qna_board.js" charset="utf-8"></script>
 </head>
 <body>
-
-<%@include file="../headerfooter/header.jsp" %>
+	<jsp:include page="../headerfooter/header.jsp"/>
     <!-- --------------------- 컨텐츠 시작 ---------------------- -->
       <center>
       <content>
         <div id="write">
-            <form action="qna_write_ok.jsp?" method="post" name="form">
-            <input type="hidden" name="qna_id" value="<%=qna_id%>">
+            <form action="qna_insert" method="post" name="form">
             <input type="hidden" name="qna_process" value="processing">  
-              <p><span>QnA</span> 글쓰기</p>
+              <p><span>QnA</span> 글수정하기</p>
               <table>
                 <tr>
                   <td>
@@ -70,7 +53,8 @@
                 </tr>
                 <tr>
                   <td>
-                    <input type="button" value="작성하기" onclick="write_ok()">
+<!--                     <input type="submit" value="수정하기"> -->
+                    <input type="button" value="수정하기" onclick="qna_write_ok()">
                     <input type="reset" value="다시작성">
                   </td>
                 </tr>

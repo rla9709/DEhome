@@ -5,68 +5,77 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.green.dehome.dao.CustomerDAO;
 import com.green.dehome.dto.CustomerDTO;
 
+@Service("CustomerService")
 public class CustomerServiceImpl implements CustomerService {
 	@Inject
 	CustomerDAO customerDao;
-	@Override
-	public void create(CustomerDTO customerDTO) throws Exception {
-		String title = customerDTO.getQna_title();
-		String content = customerDTO.getQna_content();
-		String usernick = customerDTO.getUser_nick();
-		
-		title = title.replace("<", "&lt;");
-		title = title.replace("<", "&gt;");
-		usernick= usernick.replace("<", "&lt;");
-		usernick= usernick.replace("<", "&gt;");
-		title = title.replace(" ", "&nbsp;&nbsp;");
-		usernick = usernick.replace(" ", "&nbsp;&nbsp;");
-		content = content.replace("\n", "<br>");
-		customerDTO.setQna_title(title);
-		customerDTO.setQna_content(content);
-		customerDTO.setUser_nick(usernick);
-		
+	
+	//QnA
+	@Override // 게시글전체목록
+	public List<CustomerDTO> qna_list(CustomerDTO dto) throws Exception {
+		return customerDao.qna_list(dto);
+	}
+	
+//	@Transactional(isolation = Isolation.READ_COMMITTED)
+	@Override // 게시글상세보기
+	public CustomerDTO qna_show(int qna_no) throws Exception {
+		customerDao.qna_increaseViewcnt(qna_no);
+		return customerDao.qna_show(qna_no);
 	}
 
-	@Override
-	public CustomerDTO read(int qna_no) throws Exception {
-		// TODO Auto-generated method stub
-		return customerDao.read(qna_no);
+	@Override // 게시글작성
+	public void qna_insert(CustomerDTO customerDTO) throws Exception {
+		customerDao.qna_insert(customerDTO);
 	}
 
-	@Override
-	public void update(CustomerDTO customerDTO) throws Exception {
-		customerDao.update(customerDTO);
-		
+	@Override // 게시글수정
+	public void qna_modify(CustomerDTO customerDTO) throws Exception {
+		customerDao.qna_modify(customerDTO);
+
 	}
 
-	@Override
-	public void delete(int qna_no) throws Exception {
-		customerDao.delete(qna_no);
-		
-	}
+	@Override // 게시글삭제
+	public void qna_delete(int qna_no) throws Exception {
+		customerDao.qna_delete(qna_no);
 
-	@Override
-	public List<CustomerDTO> listAll() throws Exception {
-		// TODO Auto-generated method stub
-		return customerDao.listAll();
 	}
-
-	@Override
-	public void increaseViewcnt(int qna_no, HttpSession session) throws Exception {
-		long update_time = 0;
-		
-		if(session.getAttribute("update_time_"+qna_no) != null) {
-			update_time = (long)session.getAttribute("update_time_"+qna_no);
-		}
-		long current_time = System.currentTimeMillis();
-		
-		if (current_time - update_time > 5*1000) {
-			customerDao.increaseViewcnt(qna_no);
-			session.setAttribute("update_time_"	+qna_no, current_time);
-		}
+	
+	//Notice
+	@Override // 게시글전체목록
+	public List<CustomerDTO> not_list(CustomerDTO dto) throws Exception {
+		return customerDao.not_list(dto);
 	}
+	
+//	@Transactional(isolation = Isolation.READ_COMMITTED)
+	@Override // 게시글상세보기
+	public CustomerDTO not_show(int not_no) throws Exception {
+		customerDao.not_increaseViewcnt(not_no);
+		return customerDao.not_show(not_no);
+	}
+	
+	@Override // 게시글작성
+	public void not_insert(CustomerDTO customerDTO) throws Exception {
+		customerDao.not_insert(customerDTO);
+	}
+	
+	@Override // 게시글수정
+	public void not_modify(CustomerDTO customerDTO) throws Exception {
+		customerDao.not_modify(customerDTO);
+		
+	}
+	
+	@Override // 게시글삭제
+	public void not_delete(int not_no) throws Exception {
+		customerDao.not_delete(not_no);
+		
+	}
+	
 
 }
