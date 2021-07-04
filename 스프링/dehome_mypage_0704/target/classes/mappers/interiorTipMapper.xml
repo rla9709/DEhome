@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.interiorTipMapper">
+	<!-- 인테리어 카테고리 별 팁 전체 리스트 출력 -->
+	<select id="tipListConstruct" resultType="InteriorTipDTO">
+		SELECT 
+			  TIP_NO 
+			, USER_NICK 
+			, CATEGORY 
+			, TIP_TITLE 
+			, TIP_CONTENT 
+			, TIP_FILE 
+			, TIP_DATE 
+			, TIP_COUNT 
+			, TIP_BOOKMARK
+		FROM 
+			INTERIOR_TIP
+		WHERE
+			CATEGORY = 'CONSTRUCT'
+		ORDER BY 
+			TIP_COUNT DESC
+		LIMIT 0, 4
+	</select>
+	<select id="tipListStorage" resultType="InteriorTipDTO">
+		SELECT 
+			  TIP_NO 
+			, USER_NICK 
+			, CATEGORY 
+			, TIP_TITLE 
+			, TIP_CONTENT 
+			, TIP_FILE 
+			, TIP_DATE 
+			, TIP_COUNT 
+			, TIP_BOOKMARK
+		FROM 
+			INTERIOR_TIP
+		WHERE
+			CATEGORY = 'STORAGE'
+		ORDER BY 
+			TIP_COUNT DESC
+		LIMIT 0, 4
+	</select>
+	<select id="tipListDecorate" resultType="InteriorTipDTO">
+		SELECT 
+			  TIP_NO 
+			, USER_NICK 
+			, CATEGORY 
+			, TIP_TITLE 
+			, TIP_CONTENT 
+			, TIP_FILE 
+			, TIP_DATE 
+			, TIP_COUNT 
+			, TIP_BOOKMARK
+		FROM 
+			INTERIOR_TIP
+		WHERE
+			CATEGORY = 'DECORATE'
+		ORDER BY 
+			TIP_COUNT DESC
+		LIMIT 0, 4
+	</select>
+	<select id="tipListCleaning" resultType="InteriorTipDTO">
+		SELECT 
+			  TIP_NO 
+			, USER_NICK 
+			, CATEGORY 
+			, TIP_TITLE 
+			, TIP_CONTENT 
+			, TIP_FILE 
+			, TIP_DATE 
+			, TIP_COUNT 
+			, TIP_BOOKMARK
+		FROM 
+			INTERIOR_TIP
+		WHERE
+			CATEGORY = 'CLEANING'
+		ORDER BY 
+			TIP_COUNT DESC
+		LIMIT 0, 4
+	</select>
+	<select id="tipListDiy" resultType="InteriorTipDTO">
+		SELECT 
+			  TIP_NO 
+			, USER_NICK 
+			, CATEGORY 
+			, TIP_TITLE 
+			, TIP_CONTENT 
+			, TIP_FILE 
+			, TIP_DATE 
+			, TIP_COUNT 
+			, TIP_BOOKMARK
+		FROM 
+			INTERIOR_TIP
+		WHERE
+			CATEGORY = 'DIY'
+		ORDER BY 
+			TIP_COUNT DESC
+		LIMIT 0, 4
+	</select>
+	<select id="tipListReform" resultType="InteriorTipDTO">
+		SELECT 
+			  TIP_NO 
+			, USER_NICK 
+			, CATEGORY 
+			, TIP_TITLE 
+			, TIP_CONTENT 
+			, TIP_FILE 
+			, TIP_DATE 
+			, TIP_COUNT 
+			, TIP_BOOKMARK
+		FROM 
+			INTERIOR_TIP
+		WHERE
+			CATEGORY = 'REFORM'
+		ORDER BY 
+			TIP_COUNT DESC
+		LIMIT 0, 4
+	</select>
+	<select id="tipListKitchen" resultType="InteriorTipDTO">
+		SELECT 
+			  TIP_NO 
+			, USER_NICK 
+			, CATEGORY 
+			, TIP_TITLE 
+			, TIP_CONTENT 
+			, TIP_FILE 
+			, TIP_DATE 
+			, TIP_COUNT 
+			, TIP_BOOKMARK
+		FROM 
+			INTERIOR_TIP
+		WHERE
+			CATEGORY = 'KITCHEN'
+		ORDER BY 
+			TIP_COUNT DESC
+		LIMIT 0, 4
+	</select>
+	<select id="tipListLighting" resultType="InteriorTipDTO">
+		SELECT 
+			  TIP_NO 
+			, USER_NICK 
+			, CATEGORY 
+			, TIP_TITLE 
+			, TIP_CONTENT 
+			, TIP_FILE 
+			, TIP_DATE 
+			, TIP_COUNT 
+			, TIP_BOOKMARK
+		FROM 
+			INTERIOR_TIP
+		WHERE
+			CATEGORY = 'LIGHTING'
+		ORDER BY 
+			TIP_COUNT DESC
+		LIMIT 0, 4
+	</select>
+	<!-- 카테고리 별 인테리어 팁 출력  -->
+	<select id="tipListCategory" resultType="InteriorTipDTO" parameterType="InteriorTipDTO">
+		SELECT 
+			  TIP_NO 
+			, USER_NICK 
+			, CATEGORY 
+			, TIP_TITLE 
+			, TIP_CONTENT 
+			, TIP_FILE 
+			, TIP_DATE 
+			, TIP_COUNT 
+			, TIP_BOOKMARK
+		FROM 
+			INTERIOR_TIP
+		WHERE
+			CATEGORY = #{category}
+		ORDER BY 
+			TIP_COUNT DESC
+		LIMIT 0, 9
+	</select>
+	<!-- 인테리어팁 작성 -->
+	<insert id="tipWrite">
+		insert into 
+			interior_tip 
+		values(#{tip_no}
+			 , #{user_nick}
+			 , #{category}
+			 , #{tip_title}
+			 , #{tip_content}
+			 , #{tip_file}
+			 , now()
+			 , #{tip_count}
+			 , #{tip_bookmark})
+	</insert>
+</mapper>
