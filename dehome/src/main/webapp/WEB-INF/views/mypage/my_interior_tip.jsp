@@ -30,38 +30,32 @@
           <div class="mypage_header_box">
             <p class="my_page_label">${nick}님 안녕하세요</p>
           </div>
-          <!-- 마이페이지 사이드메뉴 인클루드 예정 -->
           <div class="mypage_sidebar_box">
             <ul class="mypage_ul1">
               <li class="mypage_side_label">회원정보</li>
               <li class="mypage_side_list" ><a href="edit_account">개인정보 수정</a></li>
               <li class="mypage_side_list"><a href="delete_account">회원탈퇴</a></li>
-              <li class="mypage_side_list"><a href="account_system_link">간편로그인 연동</a></li>
-              <li class="mypage_side_list"><a href="#">주제 목록4</a></li>
             </ul>
             <ul class="mypage_ul2">
               <li class="mypage_side_label">활동 및 문의</li>
-              <li class="mypage_side_list"><a href="my_trade_list">나의 거래 ></a></li>
+              <li class="mypage_side_list"><a href="#">나의 거래</a>
+                 <ul class="mypage_side_list_2">
+                    <li><a href="../mypage/my_sell_list">내가 등록한 물품</a></li>
+                    <li><a href="../mypage/my_buy_list">나의 구매 물품</a></li>
+                 </ul>
+              </li>
               <li class="mypage_side_list_1" style="color: #1B7850"><a href="my_trade_board">내가 작성한 글 ></a>
-              	<ul class="mypage_side_list_2">
-              		<li><a href="my_trade_board">자유게시판</a></li>
-              		<li><a href="my_interior_tip">인테리어 팁</a></li>
-              		<li><a href="my_review">시공리뷰</a></li>
-              		<li><a href="my_qna">QNA</a></li>
-              	</ul>
+                 <ul class="mypage_side_list_2">
+                    <li><a href="my_trade_board">자유게시판</a></li>
+                    <li style="color: #1B7850"><a href="../mypage/my_interior_tip">인테리어 팁 ></a></li>
+                    <li><a href="my_review">시공리뷰</a></li>
+                    <li><a href="../mypage/my_qna">QNA</a></li>
+                 </ul>
               </li>
               <li class="mypage_side_list"><a href="#">대화목록</a></li>
-              <li class="mypage_side_list"><a href="#">북마크</a></li>
-            </ul>
-            <ul class="mypage_ul3">
-              <li class="mypage_side_label">사이드바 주제3</li>
-              <li class="mypage_side_list"><a href="#">주제 목록1</a></li>
-              <li class="mypage_side_list"><a href="#">주제 목록2</a></li>
-              <li class="mypage_side_list"><a href="#">주제 목록3</a></li>
-              <li class="mypage_side_list"><a href="#">주제 목록4</a></li>
+              <li class="mypage_side_list"><a href="../mypage/my_bookmark">북마크</a></li>
             </ul>
           </div>
-          <!-- 마이페이지 사이드메뉴 인클루드 예정 -->
           <!-- 콘텐트 시작  -->
       <div id="my_interior_tip_list">
 	      <div class="my_tip_content">
@@ -75,7 +69,7 @@
 	                  <img src="${path}${dto.tip_file}" />
 		            </div>
 		            <c:choose>
-					  <c:when test="${fn:contains(dto.tip_bmuser, dto.tip_user_nick)}">
+					  <c:when test="${fn:contains(dto.tip_bmuser, nick)}">
 					     <input type="button" class="bm_on">
 					  </c:when>
 					  <c:otherwise>

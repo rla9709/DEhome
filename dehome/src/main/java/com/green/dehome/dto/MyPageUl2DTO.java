@@ -3,6 +3,181 @@ package com.green.dehome.dto;
 import java.sql.Timestamp;
 
 public class MyPageUl2DTO {
+	
+	//내가 작성한 QNA 관련 변수
+	private int qna_no;
+	private String qna_title;
+	private String qna_content;
+	private Timestamp qna_date;
+	private int qna_count;
+	private String qna_type;
+	private String qna_pw;
+	private String qna_process;
+	private String qna_user_nick;
+	
+	
+	public int getQna_no() {
+		return qna_no;
+	}
+	public void setQna_no(int qna_no) {
+		this.qna_no = qna_no;
+	}
+	public String getQna_title() {
+		return qna_title;
+	}
+	public void setQna_title(String qna_title) {
+		this.qna_title = qna_title;
+	}
+	public String getQna_content() {
+		return qna_content;
+	}
+	public void setQna_content(String qna_content) {
+		this.qna_content = qna_content;
+	}
+	public Timestamp getQna_date() {
+		return qna_date;
+	}
+	public void setQna_date(Timestamp qna_date) {
+		this.qna_date = qna_date;
+	}
+	public int getQna_count() {
+		return qna_count;
+	}
+	public void setQna_count(int qna_count) {
+		this.qna_count = qna_count;
+	}
+	public String getQna_type() {
+		return qna_type;
+	}
+	public void setQna_type(String qna_type) {
+		this.qna_type = qna_type;
+	}
+	public String getQna_pw() {
+		return qna_pw;
+	}
+	public void setQna_pw(String qna_pw) {
+		this.qna_pw = qna_pw;
+	}
+	public String getQna_process() {
+		return qna_process;
+	}
+	public void setQna_process(String qna_process) {
+		this.qna_process = qna_process;
+	}
+	public String getQna_user_nick() {
+		return qna_user_nick;
+	}
+	public void setQna_user_nick(String qna_user_nick) {
+		this.qna_user_nick = qna_user_nick;
+	}
+
+
+
+
+	//내가 등록한 중고거래 물품 관련 변수
+	private int tr_no;
+	private String tr_user_nick;
+	private String tr_category;
+	private String tr_title;
+	private String tr_content;
+	private Timestamp tr_date;
+	private int tr_count;
+	private int tr_evalue;
+	private String tr_price;
+	private String tr_photo;
+	private String tr_thumb; //이미지 파일 업로드 썸네일
+	private int tr_complete; //거래완료 여부
+	private int like;  //관심도 갯수 총합
+	private String user_addr2;  //유저 주소,닉네임 집어 넣을 변수
+	
+	public String getUser_addr2() {
+		return user_addr2;
+	}
+	public void setUser_addr2(String user_addr2) {
+		this.user_addr2 = user_addr2;
+	}
+	public int getLike() {
+		return like;
+	}
+	public void setLike(int like) {
+		this.like = like;
+	}
+	public int getTr_no() {
+		return tr_no;
+	}
+	public void setTr_no(int tr_no) {
+		this.tr_no = tr_no;
+	}
+	public String getTr_user_nick() {
+		return tr_user_nick;
+	}
+	public void setTr_user_nick(String tr_user_nick) {
+		this.tr_user_nick = tr_user_nick;
+	}
+	public String getTr_category() {
+		return tr_category;
+	}
+	public void setTr_category(String tr_category) {
+		this.tr_category = tr_category;
+	}
+	public String getTr_title() {
+		return tr_title;
+	}
+	public void setTr_title(String tr_title) {
+		this.tr_title = tr_title;
+	}
+	public String getTr_content() {
+		return tr_content;
+	}
+	public void setTr_content(String tr_content) {
+		this.tr_content = tr_content;
+	}
+	public Timestamp getTr_date() {
+		return tr_date;
+	}
+	public void setTr_date(Timestamp tr_date) {
+		this.tr_date = tr_date;
+	}
+	public int getTr_count() {
+		return tr_count;
+	}
+	public void setTr_count(int tr_count) {
+		this.tr_count = tr_count;
+	}
+	public int getTr_evalue() {
+		return tr_evalue;
+	}
+	public void setTr_evalue(int tr_evalue) {
+		this.tr_evalue = tr_evalue;
+	}
+	public String getTr_price() {
+		return tr_price;
+	}
+	public void setTr_price(String tr_price) {
+		this.tr_price = tr_price;
+	}
+	public String getTr_photo() {
+		return tr_photo;
+	}
+	public void setTr_photo(String tr_photo) {
+		this.tr_photo = tr_photo;
+	}
+	public String getTr_thumb() {
+		return tr_thumb;
+	}
+	public void setTr_thumb(String tr_thumb) {
+		this.tr_thumb = tr_thumb;
+	}
+	public int getTr_complete() {
+		return tr_complete;
+	}
+	public void setTr_complete(int tr_complete) {
+		this.tr_complete = tr_complete;
+	}
+
+
+
+
 	//내가 작성한 인테리어팁 관련 변수
 	private int tip_no;
 	private String tip_user_nick;
