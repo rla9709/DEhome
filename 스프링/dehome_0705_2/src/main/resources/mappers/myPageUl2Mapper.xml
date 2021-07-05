@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.myPageUl2Mapper">
+	<!-- 내가 작성한 인테리어 팁 리스트 출력 -->
+	<select id="myTipList" resultType="MyPageUl2DTO" parameterType="MyPageUl2DTO">
+		SELECT
+			  TIP_NO as tip_no
+			, USER_NICK as tip_user_nick
+			, CATEGORY as tip_category
+			, TIP_TITLE as tip_title
+			, TIP_CONTENT as tip_content
+			, TIP_FILE as tip_file
+			, TIP_DATE as tip_date
+			, TIP_COUNT as tip_count
+			, TIP_BOOKMARK as tip_bookmark
+			, TIP_BMUSER as tip_bmuser 
+		FROM 
+			INTERIOR_TIP 
+		WHERE 
+			USER_NICK = #{tip_user_nick}
+	</select>
+	
+	<!-- 내가 북마크한 인테리어 팁 리스트 출력 -->
+	<select id="myBmTipList" resultType="MyPageUl2DTO" parameterType="MyPageUl2DTO">
+		SELECT 
+			  TIP_NO as tip_no
+			, USER_NICK as tip_user_nick
+			, CATEGORY as tip_category
+			, TIP_TITLE as tip_title
+			, TIP_CONTENT as tip_content
+			, TIP_FILE as tip_file
+			, TIP_DATE as tip_date
+			, TIP_COUNT as tip_count
+			, TIP_BOOKMARK as tip_bookmark
+			, TIP_BMUSER as tip_bmuser  
+		FROM 
+			INTERIOR_TIP 
+		WHERE 
+			TIP_BMUSER LIKE #{tip_user_nick}%
+	</select>
+</mapper>
