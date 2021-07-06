@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.chatMapper">
+	<insert id="insertChat">
+		insert into trade_chat(
+					trade_no
+					, user_nick
+					, to_nick
+					, trade_chatcontent
+					, trade_chattime
+					, trade_chatread
+					) 
+					values (#{trade_no}
+						, #{user_nick}
+						, #{to_nick}
+						, #{trade_chatcontent}
+						, now()
+						, 0	)
+	</insert>
+	<select id="selectChat" resultType="chatDTO" parameterType="chatDTO">
+		select * from trade_chat 
+		where ((user_nick = #{user_nick} and to_nick = #{to_nick}) or (user_nick = #{to_nick} and to_nick = #{user_nick}))
+		and trade_chatno > #{listType}
+		and trade_no = #{trade_no}
+		order by trade_chattime;
+	</select>
+	<select id="selectChatLimit" resultType="chatDTO" parameterType="chatDTO">
+		select * from trade_chat 
+		where ((user_nick = #{user_nick} and to_nick = #{to_nick}) or (user_nick = #{to_nick} and to_nick = #{user_nick}))
+		and trade_chatno > (select max(trade_chatno) - #{number} from trade_chat where (user_nick = #{user_nick} and to_nick = #{to_nick}) or (user_nick = #{to_nick} and to_nick = #{user_nick}))
+		and trade_no = #{trade_no}
+		order by trade_chattime;
+	</select>
+	
+	<select id="getNick" resultType="String" parameterType="chatDTO">
+		select user_nick from trade_chat 
+		where to_nick = #{user_nick} 
+		and trade_no = #{trade_no}
+		limit 1
+	</select>
+	<!-- 내가 판매자 일때의 대화 목록 -->
+	<select id="getChatList" resultType="chatDTO" parameterType="chatDTO">
+		select max(t2.trade_chatno) as trade_chatno
+				, t2.user_nick as user_nick
+		        , t2.to_nick as to_nick
+		        , t2.trade_no as trade_no
+		        , t1.TRADE_PHOTO as trade_photo
+		        , t1.TRADE_PRICE as trade_price
+		        , t1.TRADE_COMPLETE as trade_complete
+		        , t1.TRADE_DATE as trade_date
+		        , t1.Trade_title as trade_title
+		from usedtrade t1, trade_chat t2 
+		where t2.to_nick = #{user_nick} 
+		and t1.USER_NICK = #{user_nick} 
+		and t1.trade_no = t2.trade_no
+		and t1.trade_complete = 0
+		group by user_nick
+		order by trade_chatno desc
+	</select>
+	<!-- 내가 구매자 일때의 대화 목록 -->
+	<select id="getChatList2" resultType="chatDTO" parameterType="chatDTO">
+		select max(t2.trade_chatno) as trade_chatno
+				, t2.user_nick as user_nick
+		        , t2.to_nick as to_nick
+		        , t2.trade_no as trade_no
+		        , t1.TRADE_PHOTO as trade_photo
+		        , t1.TRADE_PRICE as trade_price
+		        , t1.TRADE_COMPLETE as trade_complete
+		        , t1.TRADE_DATE as trade_date
+		        , t1.Trade_title as trade_title
+		from usedtrade t1, trade_chat t2 
+		where t2.user_nick= #{user_nick}
+		and t1.USER_NICK != #{user_nick}
+		and t1.trade_no = t2.trade_no
+		and t1.trade_complete = 0
+		group by user_nick
+		order by trade_chatno desc
+	</select>
+	
+	
+	<!-- 시공상담 부분 -->
+	
+	
+	<insert id="insertChatCoun">
+		insert into counsel_chat(
+					com_name
+					, user_nick
+					, to_nick
+					, coun_chatcontent
+					, coun_chattime
+					, coun_chatread
+					) 
+					values (#{com_name}
+						, #{user_nick}
+						, #{to_nick}
+						, #{coun_chatcontent}
+						, now()
+						, 0	)
+	</insert>
+	<select id="selectChatCoun" resultType="chatDTO" parameterType="chatDTO">
+		select * from counsel_chat 
+		where ((user_nick = #{user_nick} and to_nick = #{to_nick}) or (user_nick = #{to_nick} and to_nick = #{user_nick}))
+		and coun_chatno > #{listType}
+		and com_name = #{com_name}
+		order by coun_chattime;
+	</select>
+	<select id="selectChatLimitCoun" resultType="chatDTO" parameterType="chatDTO">
+		select * from counsel_chat 
+		where ((user_nick = #{user_nick} and to_nick = #{to_nick}) or (user_nick = #{to_nick} and to_nick = #{user_nick}))
+		and coun_chatno > (select max(coun_chatno) - #{number} from counsel_chat where (user_nick = #{user_nick} and to_nick = #{to_nick}) or (user_nick = #{to_nick} and to_nick = #{user_nick}))
+		and com_name = #{com_name}
+		order by coun_chattime;
+	</select>
+	
+	<select id="getNickCoun" resultType="String" parameterType="chatDTO">
+		select user_nick from counsel_chat 
+		where to_nick = #{user_nick} 
+		and com_name = #{com_name}
+		limit 1
+	</select>
+	
+	<!--시공상담 대화 목록(유저일때) -->
+	<select id="getChatListCounUser" resultType="chatDTO" parameterType="chatDTO">
+		select p.com_name as com_name
+				, p.com_addr as com_addr
+				, p.com_rating as com_rating
+				, p.com_file as com_file
+				, c.user_nick as user_nick
+				, c.to_nick as to_nick
+		from company p join counsel_chat c
+		on p.com_name = c.com_name
+		where user_nick = #{user_nick}
+		group by user_nick, com_name
+	</select>
+	
+	
+	<!--시공상담 대화 목록(업체일때) -->
+	<select id="getChatListCounCom" resultType="chatDTO" parameterType="chatDTO">
+		select p.com_name as com_name
+				, p.com_addr as com_addr
+				, p.com_rating as com_rating
+				, p.com_file as com_file
+				, c.user_nick as user_nick
+				, c.to_nick as to_nick
+		from company p join counsel_chat c
+		on p.com_name = c.com_name
+		where c.to_nick = #{user_nick}
+		and c.to_nick = c.com_name
+		group by user_nick, com_name
+	</select>
+	
+	
+	<!-- 세션 유저의 업체명 받아오기 -->
+	<select id="usernickComName" resultType="string">
+		select com_name from user where user_nick = #{user_nick}
+	</select>
+</mapper>

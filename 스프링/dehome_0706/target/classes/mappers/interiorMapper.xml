@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.interiorMapper">
+	<!-- 세션 유저의 위치정보 받아오기 -->
+	<select id="userAddr" resultType="string">
+		select case when left(user_addr2,1) = '경' 
+					then substring_index(user_addr2,' ', 3) 
+					when left(user_addr2,1) = '전' 
+					then substring_index(user_addr2,' ', 3) 
+					when left(user_addr2,1) = '충' 
+					then substring_index(user_addr2,' ', 3) 
+					when left(user_addr2,1) = '강' 
+					then substring_index(user_addr2,' ', 3) 
+					else substring_index(user_addr2,' ', 2) 
+					end 
+		from user where user_nick = #{user_nick}
+	</select>
+	
+	<!-- 위치값에 해당하는 기업 가지고 오기 -->
+	<select id="locList" parameterType="InteriorDTO" resultType="InteriorDTO">
+		select com_name, com_addr, com_rating, com_title, com_content, com_contract, com_file, com_thumbfile, re_count 
+		from company 
+		where com_addr like #{addr} 
+		order by com_rating desc
+		limit 0, 3
+		<!-- 후에 업체 많이 추가해두면 처음에 9개 먼저 보여주도록 아래 소스로 변경 -->
+		<!--  limit 0, 10  -->
+	</select>
+	
+	<!-- 더보기 클릭시 추가로 기업 가지고 오기 -->
+	<select id="moreLocList" parameterType="InteriorDTO" resultType="InteriorDTO">
+		select com_name, com_addr, com_rating, com_title, com_content, com_contract, com_file, com_thumbfile, re_count 
+		from company  
+		where com_addr like #{addr} 
+		order by com_rating desc
+		limit #{startPage}, 3
+	</select>
+	
+	<!-- 세션 유저의 업체명 받아오기 -->
+	<select id="userComName" resultType="string">
+		select com_name from user where user_nick = #{user_nick}
+	</select>
+	
+	<!-- 해당 업체의 정보 받아오기 -->
+	<select id="companyInfo" parameterType="InteriorDTO" resultType="InteriorDTO">
+		select com_name, com_addr, com_rating, com_title, com_content, com_contract, com_file, com_thumbfile, re_count 
+		from company
+		where com_name = #{com_name}
+	</select>
+	
+	<!-- 해당 업체의 리뷰 받아오기 -->
+	<select id="comReivew" parameterType="InteriorDTO" resultType="InteriorDTO">
+		select re_no, user_nick, re_title, re_content, re_file, re_thumbfile, re_date, re_interest 
+		from review 
+		where com_name = #{com_name} 
+		order by re_interest desc
+		limit 0, 2
+	</select>
+	
+	<!-- 해당 업체의 실제 리뷰 카운트 받아오기 -->
+	<select id="realReCount" parameterType="InteriorDTO" resultType="int">
+		select count(*) from review where com_name = #{com_name}
+	</select>
+	
+	
+	<!-- 더보기 클릭시 추가로 리뷰 가지고 오기 -->
+	<select id="moreReList" parameterType="InteriorDTO" resultType="InteriorDTO">
+		select re_no, user_nick, re_title, re_content, re_file, re_thumbfile, re_date, re_interest 
+		from review 
+		where com_name = #{com_name} 
+		order by re_interest desc
+		limit #{startRePage}, 2
+	</select>
+	
+	
+	<!-- 해당 업체의 시공사례 받아오기 -->
+	<select id="comExample" parameterType="InteriorDTO" resultType="InteriorDTO">
+		select ex_no, ex_title, ex_file, ex_thumbfile
+		from con_example 
+		where com_name = #{com_name} 
+		order by ex_no desc
+		limit 0, 3
+	</select>
+	
+	
+	<!-- 해당 업체의 실제 시공사례 카운트 받아오기 -->
+	<select id="realExCount" parameterType="InteriorDTO" resultType="int">
+		select count(*) from con_example where com_name = #{com_name}
+	</select>
+	
+	
+	<!-- 더보기 클릭시 추가로 시공사례 가지고 오기 -->
+	<select id="moreExList" parameterType="InteriorDTO" resultType="InteriorDTO">
+		select ex_no, ex_title, ex_file, ex_thumbfile 
+		from con_example 
+		where com_name = #{com_name} 
+		order by ex_no desc
+		limit #{startExPage}, 3
+	</select>
+	
+	<!-- 등록전인 기업 이름 들고오기 -->
+	<select id="notInCompany" resultType="string">
+		select com_name
+		from user
+		where user.com_name not in
+		(select com_name from company)
+		order by com_name desc
+	</select>
+	
+	<!-- 업체 등록하기 -->
+	<insert id="companyRegist" parameterType="InteriorDTO">
+		insert into company(com_name, com_addr, com_title, com_content, com_file, com_thumbfile, com_contract, com_rating, re_sum, re_count) 
+		values(#{com_name}, #{com_addr}, #{com_title}, #{com_content}, #{com_file}, #{com_thumbfile}, 0, 0, 0, 0)
+	</insert>
+	
+	<!-- 리뷰 등록하기 -->
+	<insert id="reviewRegist" parameterType="InteriorDTO">
+		insert into review (com_name, user_nick, re_title, re_content, re_file, re_thumbfile, re_date, re_interest) 
+		values(#{com_name}, #{user_nick}, #{re_title}, #{re_content}, #{re_file}, #{re_thumbfile}, now(),0);
+	</insert>
+	
+	<!-- 리뷰 등록시 해당 총점 증가 -->
+	<update id="reSum" parameterType="InteriorDTO">
+		update company set re_sum = re_sum + #{com_rating} where com_name = #{com_name};
+	</update>
+	
+	
+	<!-- 리뷰 등록시 리뷰 카운트 증가 -->
+	<update id="reCount" parameterType="InteriorDTO">
+		update company set re_count = re_count + 1 where com_name = #{com_name};
+	</update>
+	
+	<!-- 리뷰 등록시 업체 평점 업데이트 -->
+	<update id="reRating" parameterType="InteriorDTO">
+		update company set com_rating = round((re_sum / re_count),1) where com_name = #{com_name};
+	</update>
+	
+	<!-- 해당 리뷰 들고오기 -->
+	<select id="reviewShow" parameterType="InteriorDTO" resultType="InteriorDTO">
+		select com_name, user_nick, re_title, re_content, re_file, re_date, re_interest 
+		from review 
+		where re_no = #{re_no};
+	</select>
+	
+	<!-- 해당 유저 시공리뷰 좋아요 클릭 유무 -->
+	<select id="likeOnOff" parameterType="InteriorDTO" resultType="InteriorDTO">
+		select * from re_interest where re_no = #{re_no} and user_nick = #{user_nick}
+	</select>
+	
+	<!-- 리뷰 좋아요 클릭시 좋아요 테이블에 더하기 -->
+	<insert id="reviewLikeOn" parameterType="InteriorDTO">
+		insert into re_interest (user_nick, re_no)
+		values(#{user_nick}, #{re_no});
+	</insert>
+	
+	<!-- 리뷰 좋아요 클릭시 좋아요 수 증가 -->
+	<update id="reInterestCountUp" parameterType="InteriorDTO">
+		update review set re_interest = re_interest + 1 where re_no = #{re_no}
+	</update>
+	
+	<!-- 리뷰 좋아요 취소 클릭시 좋아요 테이블에서 삭제 -->
+	<insert id="reviewLikeOff" parameterType="InteriorDTO">
+		delete from re_interest where user_nick = #{user_nick} and re_no = #{re_no}
+	</insert>
+	
+	<!-- 리뷰 좋아요 취소 클릭시 좋아요 수 차감 -->
+	<update id="reInterestCountDown" parameterType="InteriorDTO">
+		update review set re_interest = re_interest - 1 where re_no = #{re_no}
+	</update>
+	
+	<!-- 리뷰 좋아요 갯수 들고오기 -->
+	<select id="likeCount" parameterType="InteriorDTO" resultType="String">
+		select re_interest from review where re_no = #{re_no}
+	</select>
+	
+	
+	<!-- 시공사례 등록하기 -->
+	<insert id="exRegist" parameterType="InteriorDTO">
+		insert into con_example (com_name, ex_title, ex_content, ex_file, ex_thumbfile, reg_date) 
+		values(#{com_name}, #{ex_title}, #{ex_content}, #{ex_file}, #{ex_thumbfile}, now())
+	</insert>
+	
+	<!-- 시공사례 등록시 사례 카운트 증가 -->
+	<update id="exCount" parameterType="InteriorDTO">
+		update company set com_contract = com_contract + 1 where com_name = #{com_name};
+	</update>
+	
+	<!-- 해당 시공사례 들고오기 -->
+	<select id="exShow" parameterType="InteriorDTO" resultType="InteriorDTO">
+		select com_name, ex_title, ex_content, ex_file, ex_thumbfile, reg_date 
+		from con_example 
+		where ex_no = #{ex_no}
+	</select>
+	
+	
+	
+	<!-- 해당 업체 정보 수정하기_사진수정X -->
+	<update id="comEdit" parameterType="InteriorDTO">
+		update company set 
+		com_addr = #{com_addr}, com_title = #{com_title}, com_content = #{com_content} 
+		where com_name = #{com_name}
+	</update>
+	
+	
+	<!-- 해당 업체 정보 사진 수정하기 -->
+	<update id="comEditFile" parameterType="InteriorDTO">
+		update company set 
+		com_file = #{com_file}, com_thumbfile = #{com_thumbfile} 
+		where com_name = #{com_name}
+	</update>
+	
+	
+	<!-- 해당 리뷰 정보 수정하기_사진수정X -->
+	<update id="reEdit" parameterType="InteriorDTO">
+		update review set 
+		re_title = #{re_title}, re_content = #{re_content} 
+		where re_no = #{re_no}
+	</update>
+	
+	<!-- 해당 리뷰 정보 사진 수정하기 -->
+	<update id="reEditFile" parameterType="InteriorDTO">
+		update review set 
+		re_file = #{re_file}, re_thumbfile = #{re_thumbfile} 
+		where re_no = #{re_no}
+	</update>
+	
+	<!-- 해당 리뷰 삭제하기 -->
+	<delete id="reDelete" parameterType="InteriorDTO">
+		delete from review where re_no = #{re_no}
+	</delete>
+	
+	<!-- 해당 리뷰관련 좋아요 삭제하기 -->
+	<delete id="reLikeDelete" parameterType="InteriorDTO">
+		delete from re_interest where re_no = #{re_no}
+	</delete>
+	
+	
+	<!-- 해당 시공사례 정보 수정하기_사진수정X -->
+	<update id="exEdit" parameterType="InteriorDTO">
+		update con_example set 
+		ex_title = #{ex_title}, ex_content = #{ex_content} 
+		where ex_no = #{ex_no}
+	</update>
+	
+	
+	<!-- 해당 시공사례 정보 사진 수정하기 -->
+	<update id="exEditFile" parameterType="InteriorDTO">
+		update con_example set 
+		ex_file = #{ex_file}, ex_thumbfile = #{ex_thumbfile} 
+		where ex_no = #{ex_no}
+	</update>
+	
+	<!-- 해당 시공사례 삭제하기 -->
+	<delete id="exDelete" parameterType="InteriorDTO">
+		delete from con_example where ex_no = #{ex_no}
+	</delete>
+	
+	
+</mapper>
