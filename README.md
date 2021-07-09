@@ -1,8 +1,7 @@
-DE:home 
+DE:home 접속하기</br>
 <a href="https://www.mydehome.com/dehome/main/mainpage">DE:home</a>
 
 # DEhome
-
 팀장:김경윤<br>
 팀원:김준형<br>
 팀원:권연진<br>
